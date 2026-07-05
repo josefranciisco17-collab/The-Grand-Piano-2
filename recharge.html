@@ -187,20 +187,6 @@ font-size:16px;
 color:#bdbdbd;
 }
 
-
-.package-coins{
-font-size:28px;
-font-weight:bold;
-color:#d4af37;
-margin-bottom:10px;
-}
-
-.package-price{
-font-size:22px;
-color:#fff;
-font-weight:bold;
-}
-
 .package-header{
 display:flex;
 justify-content:space-between;
@@ -265,42 +251,49 @@ transform:translateY(-1px);
 .modal{
 display:none;
 position:fixed;
-inset:0;
-width:100vw;
-height:100vh;
+top:0;
+left:0;
+right:0;
+bottom:0;
 background:rgba(0,0,0,.75);
-display:flex;
-place-items:center;
-padding:20px;
+justify-content:center;
+align-items:center;
 z-index:99999;
+padding:20px;
 }
+
 
 .modal-content{
 width:90%;
-max-width:420px;
-background:#181818;
+max-width:360px;
+background:#1b1b1b;
 border:1px solid #d4af37;
-border-radius:22px;
-padding:25px;
+border-radius:24px;
+padding:24px;
 text-align:center;
-box-shadow:0 0 30px rgba(212,175,55,.25);
+box-shadow:0 20px 50px rgba(0,0,0,.5);
+margin:auto;
 }
+
 
 .modal-content h2{
 color:#d4af37;
 margin-bottom:15px;
 }
 
+
 .modal-content p{
 font-size:18px;
 margin:10px 0;
 }
+
 
 .modal-buttons{
 display:flex;
 gap:12px;
 margin-top:20px;
 }
+
 
 .modal-buttons button{
 flex:1;
@@ -312,13 +305,24 @@ font-weight:bold;
 cursor:pointer;
 }
 
+
 #continuePurchase{
 background:#d4af37;
 color:#111;
 }
 
+
 #closeModal{
 background:#444;
+color:#fff;
+}
+
+
+#modalCoins,
+#modalPrice{
+font-size:24px;
+font-weight:bold;
+margin:14px 0;
 color:#fff;
 }
 
