@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda Premium - The Grand Piano</title>
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Georgia,serif;
+}
+
+body{
+background:
+linear-gradient(rgba(0,0,0,.80),rgba(0,0,0,.92)),
+url("background.png") center/cover no-repeat fixed;
+color:#fff;
+padding:18px;
+}
+
+.container{
+max-width:760px;
+margin:auto;
+background:rgba(10,10,10,.90);
+backdrop-filter:blur(12px);
+border:1px solid rgba(212,175,55,.35);
+border-radius:35px;
+padding:28px;
+box-shadow:
+0 0 45px rgba(212,175,55,.15),
+0 0 25px rgba(255,255,255,.04);
+}
+
+.title{
+font-size:42px;
+font-weight:bold;
+text-align:center;
+color:#d4af37;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+color:#d7d7d7;
+font-size:18px;
+margin-bottom:35px;
+line-height:1.5;
+}
+
+.shop-card{
+text-align:center;
+width:100%;
+margin:14px 0;
+padding:22px;
+border-radius:22px;
+border:1px solid rgba(212,175,55,.35);
+background:linear-gradient(
+180deg,
+rgba(35,35,35,.98),
+rgba(12,12,12,.98)
+);
+color:#fff;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+box-shadow:
+0 0 18px rgba(212,175,55,.10);
+}
+
+
+.shop-card:hover{
+transform:translateY(-6px) scale(1.02);
+border-color:#d4af37;
+box-shadow:
+0 18px 45px rgba(212,175,55,.30),
+0 0 20px rgba(255,255,255,.05);
+}
+
+
+.back-btn{
+
+width:100%;
+margin-top:35px;
+padding:18px;
+border:none;
+border-radius:20px;
+background:linear-gradient(180deg,#d4af37,#b8860b);
+color:#111;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+
+}
+
+
+.wallet-panel{
+margin:35px 0;
+padding:24px;
+border-radius:26px;
+text-align:center;
+background:linear-gradient(
+180deg,
+rgba(35,35,35,.98),
+rgba(15,15,15,.98)
+);
+border:1px solid rgba(212,175,55,.35);
+box-shadow:0 0 25px rgba(212,175,55,.18);
+}
+
+.wallet-label{
+font-size:16px;
+color:#bdbdbd;
+letter-spacing:1px;
+}
+
+.wallet-balance{
+margin-top:10px;
+font-size:42px;
+font-weight:bold;
+color:#d4af37;
+text-shadow:0 0 15px rgba(212,175,55,.25);
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+    <div class="title">
+        🛒 Tienda Premium
+    </div>
+
+    <div class="subtitle">
+        Todo lo que necesitas para mejorar tu experiencia.
+    </div>
+
+
+<div class="wallet-panel">
+
+
+<div class="wallet-label">
+💳 Tu saldo
+</div>
+
+<div class="wallet-balance" id="coinBalance">
+0 Monedas
+</div>
+
+</div>
+
+
+<div class="featured-title">
+⭐ Las monedas es dinedo virtual, compra y diviertete.
+</div>
+
+<button class="shop-card" onclick="location.href='recharge.html'">
+
+    <div style="font-size:34px;">💰</div>
+
+    <div style="margin-top:10px;font-size:22px;">
+        Recargar Monedas Aquí
+    </div>
+
+    <div style="margin-top:8px;font-size:15px;color:#bdbdbd;font-weight:normal;">
+        Compra monedas de forma rápida y segura.
+    </div>
+
+</div> 
+
+</button>
+
+
+    <button class="shop-card" id="songsBtn">
+        🎵 Canciones Premium
+    </button>
+
+    <button class="shop-card" id="themesBtn">
+        🎨 Temas Premium
+    </button>
+
+    <button class="shop-card" id="heartsBtn">
+        ❤️ Comprar Corazones
+    </button>
+
+    <button class="shop-card" id="codesBtn">
+        🎁 Canjear Código
+    </button>
+
+    <button class="shop-card" id="historyBtn">
+        📜 Historial de Compras
+    </button>
+
+    <button class="back-btn" onclick="location.href='menu.html'">
+        ⬅ Volver al Menú
+    </button>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+[33m9878b96[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Show exact firebase error
+[33m79cc7ee[m Fix firebase midi upload path
+[33mee6c175[m Fix subida de MIDIs
+[33m191b4d7[m Fix duplicate vars
+[33m5aa8b3a[m Fix MIDI final
+[33m6e77562[m Fix duplicated vars
+[33m15e9a7a[m Fix profileInput listener
+[33m0ec9123[m Fix MIDI render
+[33m61ab889[m Sistema MIDI agregado
+[33m8434ce1[m Final premium UI adjustments
+[33m1d010b9[m UI final premium layout stable
+[33me04d6d7[m Final logo size and position
+[33m564b13f[m Adjust title and subtitle position
+[33mc915b59[m Stable centered premium logo layout
+[33m88f0e43[m Adjust middle logo
+[33m3a9c9cc[m Adjust middle logo
+[33m9fe3799[m Adjust middle logo position
+[33m1cb376b[m Fix centered logo
+[33m857c7ab[m Final logo layout
+[33mb7fe5a4[m Adjust logo layout
+[33mc717bf1[m Fix logo
+[33m4dc849a[m Add files via upload
+[33m7b75dce[m Delete icon.png
+[33mdb96ef7[m Logo integrado
+[33m6321f23[m Ajuste posicion superior UI
+[33m55c01f8[m Ajuste layout APK
+[33mceb61cd[m Fix piano brightness
+[33mf8474b7[m Fix piano container and zoom for APK
+[33m0e522cd[m Fix APK layout and controls
+[33m18243a1[m Manifest conectado al index
+[33m836ae9b[m Manifest agregado para APK
+[33m48fe325[m Icono oficial agregado
+[33m4e3022b[m Add files via upload
+[33m588d6c5[m Mover logo a la izquierda
+[33m23a1987[m UI premium refinada y branding final
+[33m1c2afe6[m Branding premium elegante
+[33m577e1e4[m Botones agrupados lado izquierdo
+[33m2a6b1b3[m Reacomodo botones superior
+[33mc188f5a[m Reorganize top bar and compact controls
+[33mdea73e9[m Adjust title, buttons and piano layout
+[33m5be9246[m Fix touch lock and fixed piano layout
+[33m1918388[m BACKUP VERSION ESTABLE
+[33mc6df5d2[m Boton menu
+[33m1c86b6a[m Remove hide UI on MIDI
+[33m118b4fa[m Fix piano responsive
+[33m4010fff[m Añadido Panel Admin con contraseña
+[33m7096ade[m Improve white key learning colors
+[33m28e9a4d[m Menu premium con foto editable
+[33meda8ca4[m Actualización
+[33mf2f3e78[m Mejorando firma del login
+[33m1f44d16[m Actualizando login
+[33m5e48470[m Actualizando login
+[33ma6dc6a0[m Actualizando login
+[33mf062b4f[m Nuevo login premium
+[33m71a07c4[m Premium UI login menu
+[33mef217c3[m Fixed piano full render
+[33me2168ac[m Sistema completo Piano Deluxe
+[33m751fbf9[m Proyecto limpio nuevo
+[33m18a2175[m Fix piano final
+[33m14d47c1[m Restore original piano
+[33m7a38f53[m Fix login definitivo
+[33mafe6eed[m Eliminar archivos extra
+[33m6607bd7[m Restore stable version
+[33mb7c79d3[m Restore piano original + Firebase MIDI
+[33m1a1d2d3[m Fix MIDI upload
+[33m90e5b55[m Fix piano biblioteca global
+[33m3982c7f[m Fix subida Storage MIDI
+[33m084dbcc[m Fix subida MIDI
+[33m366928f[m Actualizacion biblioteca global MIDI
+[33mde53fab[m Debug guardado MIDI
+[33mdad0365[m Fix biblioteca MIDIs
+[33md4e05d0[m Actualización sistema MIDI
+[33md0535b1[m Primer subida

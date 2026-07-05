@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Recargar Monedas - The Grand Piano</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Georgia,serif;
+}
+
+body{
+background:
+linear-gradient(rgba(0,0,0,.80),rgba(0,0,0,.92)),
+url("background.png") center/cover no-repeat fixed;
+color:#fff;
+padding:18px;
+}
+
+.container{
+max-width:760px;
+margin:auto;
+background:rgba(10,10,10,.90);
+backdrop-filter:blur(12px);
+border:1px solid rgba(212,175,55,.35);
+border-radius:35px;
+padding:28px;
+box-shadow:
+0 0 45px rgba(212,175,55,.15),
+0 0 25px rgba(255,255,255,.04);
+}
+
+.title{
+font-size:42px;
+font-weight:bold;
+text-align:center;
+color:#d4af37;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+color:#d7d7d7;
+font-size:18px;
+line-height:1.5;
+margin-bottom:35px;
+}
+
+.wallet-panel{
+margin-bottom:35px;
+padding:25px;
+text-align:center;
+border-radius:25px;
+background:linear-gradient(180deg,#252525,#111);
+border:1px solid rgba(212,175,55,.35);
+}
+
+.wallet-label{
+font-size:18px;
+color:#bdbdbd;
+margin-bottom:10px;
+}
+
+.wallet-balance{
+font-size:58px;
+font-weight:bold;
+color:#d4af37;
+}
+
+.package-card{
+display:flex;
+flex-wrap:wrap;
+justify-content:space-between;
+align-items:flex-start;
+padding:30px;
+margin:22px 0;
+border-radius:26px;
+border:1px solid rgba(212,175,55,.35);
+background:linear-gradient(
+180deg,
+rgba(35,35,35,.98),
+rgba(15,15,15,.98)
+);
+box-shadow:0 0 30px rgba(212,175,55,.15);
+}
+
+
+.package-info{
+width:100%;
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+
+.package-badge{
+display:inline-block;
+margin-bottom:20px;
+padding:6px 14px;
+border-radius:30px;
+background:#d4af37;
+color:#111;
+font-size:12px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+
+.package-usd{
+font-size:16px;
+color:#bdbdbd;
+}
+
+
+.package-coins{
+font-size:28px;
+font-weight:bold;
+color:#d4af37;
+margin-bottom:10px;
+}
+
+.package-price{
+font-size:22px;
+color:#fff;
+font-weight:bold;
+}
+
+
+.buy-btn{
+margin-top:20px;
+width:100%;
+padding:16px 28px;
+border:none;
+border-radius:18px;
+background:#d4af37;
+color:#111;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+}
+
+.buy-btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px rgba(212,175,55,.35);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="title">
+🪙 Recargar Monedas
+</div>
+
+<div class="subtitle">
+Compra monedas de forma rápida y segura mediante transferencia bancaria.
+</div>
+
+<div class="wallet-panel">
+
+<div class="wallet-label">
+💰 Tu saldo
+</div>
+
+<div class="wallet-balance" id="coinBalance">
+0 Monedas
+</div>
+</div>
+
+
+<div class="section-title">
+    Selecciona un paquete
+</div>
+
+<div class="package-card">
+
+    <div class="package-badge">
+        ⭐ Popular
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 50 Monedas
+        </div>
+
+        <div class="package-price">
+            $40 MXN
+        </div>
+</div>
+<button class="buy-btn">
+        Comprar
+    </button>
+    </div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        ⭐ Recomendado
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 100 Monedas
+        </div>
+
+        <div class="package-price">
+            $80 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+         Excelente Oferta
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 250 Monedas
+        </div>
+
+        <div class="package-price">
+            $100 MXN
+        </div>
+
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Muy buena  Oferta
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 380 Monedas
+        </div>
+
+        <div class="package-price">
+            $150 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 De loquisimo
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 600 Monedas
+        </div>
+
+        <div class="package-price">
+            $250 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Increible Desición
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 900 Monedas
+        </div>
+
+        <div class="package-price">
+            $350 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 El mejor paquete
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 1,500 Monedas
+        </div>
+
+        <div class="package-price">
+            $6,50 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Wow increible
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 3,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $1,200 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Excelente
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 4,500 Monedas
+        </div>
+
+        <div class="package-price">
+            $1,700 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Genial
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 8,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $3,500 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Relampagos 
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 10,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $4,200 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Guaooo
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 15,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $5,500 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Me asombras
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 20,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $8,000 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Eres brillante
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 50,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $20,000 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Sin pensarlo
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 100,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $40,000 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Un verdadero comprador
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 250,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $65,000 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Asombradisimo
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 400,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $80,000 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+
+
+<div class="package-card">
+
+    <div class="package-badge">
+        🔥 Nunca dejes de soñar
+    </div>
+
+    <div class="package-info">
+
+        <div class="package-coins">
+            🪙 500,000 Monedas
+        </div>
+
+        <div class="package-price">
+            $100,000 MXN
+        </div>
+
+    </div>
+
+    <button class="buy-btn">
+        Comprar
+    </button>
+
+</div>
+</body>
+</html>

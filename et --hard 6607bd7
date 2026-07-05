@@ -1,0 +1,59 @@
+[33m4db8994[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Restore stable piano
+[33me616e59[m Stable piano restored
+[33md438d27[m Stable piano restored
+[33m628d4a6[m Fix button to piano
+[33m4adec2a[m Restore piano and fix flow
+[33m012176d[m Fix redirect to login
+[33m22922c8[m Delete .firebaserc
+[33ma44fcd4[m Delete .gitignore
+[33m211340a[m Delete admin.html
+[33m4a56829[m Delete firebase-config.js
+[33m4ed9882[m Delete firebase.json
+[33m247f5b5[m Delete login.html
+[33m68eb44a[m Delete menu.html
+[33m8c4931b[m Delete piano.html
+[33m68bf2c2[m Add files via upload
+[33m5e98a36[m Delete index.html
+[33m33de73f[m Add files via upload
+[33m0bf60df[m Delete piano.html
+[33md9854b9[m Add files via upload
+[33mb72ef1d[m Delete piano.html
+[33m6c391da[m Add files via upload
+[33m18a03f4[m Delete piano.html
+[33mfc412a6[m Delete menu.html
+[33mea2544d[m Disable hide UI on MIDI
+[33m75cbeb2[m Fix menu route to piano
+[33mbf64dc8[m Admin fix funcionando
+[33m404304b[m Test boton
+[33m6d352bd[m Admin completo funcional
+[33m9157ed9[m Debug logs admin
+[33mf1528f0[m Fix viewPlayers global
+[33m044649e[m Conectar jugadores Firestore
+[33m4010fff[m Añadido Panel Admin con contraseña
+[33m7096ade[m Improve white key learning colors
+[33m28e9a4d[m Menu premium con foto editable
+[33meda8ca4[m Actualización
+[33mf2f3e78[m Mejorando firma del login
+[33m1f44d16[m Actualizando login
+[33m5e48470[m Actualizando login
+[33ma6dc6a0[m Actualizando login
+[33mf062b4f[m Nuevo login premium
+[33m71a07c4[m Premium UI login menu
+[33mef217c3[m Fixed piano full render
+[33me2168ac[m Sistema completo Piano Deluxe
+[33m751fbf9[m Proyecto limpio nuevo
+[33m18a2175[m Fix piano final
+[33m14d47c1[m Restore original piano
+[33m7a38f53[m Fix login definitivo
+[33mafe6eed[m Eliminar archivos extra
+[33m6607bd7[m Restore stable version
+[33mb7c79d3[m Restore piano original + Firebase MIDI
+[33m1a1d2d3[m Fix MIDI upload
+[33m90e5b55[m Fix piano biblioteca global
+[33m3982c7f[m Fix subida Storage MIDI
+[33m084dbcc[m Fix subida MIDI
+[33m366928f[m Actualizacion biblioteca global MIDI
+[33mde53fab[m Debug guardado MIDI
+[33mdad0365[m Fix biblioteca MIDIs
+[33md4e05d0[m Actualización sistema MIDI
+[33md0535b1[m Primer subida

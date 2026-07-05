@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu Piano Deluxe</title>
+
+<style>
+body{
+margin:0;
+font-family:Georgia,serif;
+color:white;
+min-height:100vh;
+background:
+linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.92)),
+url("background.png") center/cover no-repeat fixed;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:8px;
+}
+
+
+.container{
+overflow:hidden;
+box-sizing:border-box;
+width:98%;
+max-width:760px;
+padding-top:18px;
+border-radius:35px;
+background:rgba(10,10,10,.92);
+border:1px solid rgba(212,175,55,.35);
+box-shadow:
+0 0 40px rgba(212,175,55,.12),
+0 0 20px rgba(255,255,255,.05);
+backdrop-filter:blur(10px);
+text-align:left;
+}
+ 
+.profile-pic{
+width:105px;
+height:105px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid #d4af37;
+box-shadow:0 0 25px rgba(212,175,55,.35);
+margin:0;
+flex-shrink:0;
+}
+
+
+button{
+width:90%;
+padding:14px;
+margin:8px auto;
+border:none;
+border-radius:20px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+transition:.2s;
+display: block;
+}
+
+button:active{
+transform:scale(.97);
+}
+
+
+.white-btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:80%;
+    margin:10px auto;
+    background:#111;
+    color:#d4af37;
+    border:1px solid #d4af37;
+}
+
+.dark-btn{
+    width:80%;
+    margin:10px auto;
+    background:#111;
+    color:#d4af37;
+    border:1px solid #d4af37;
+}
+
+
+input{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:1px solid rgba(212,175,55,.35);
+border-radius:14px;
+background:#111;
+color:#d4af37;
+font-size:18px;
+box-sizing:border-box;
+}
+  
+
+
+
+.brand{
+margin-top:30px;
+padding:0 15px;
+text-align:center;
+font-size:14px;
+color:#c7c7c7;
+letter-spacing:1px;
+line-height:1.5;
+word-break:break-word;
+}
+
+.title{
+font-size:48px;
+font-weight:bold;
+color:#d4af37;
+line-height:.95;
+margin-top:35px;
+margin-bottom:10px;
+text-align:center;
+}
+
+
+.subtitle{
+font-size:20px;
+color:white;
+margin-top:12px;
+margin-bottom:30px;
+text-align:center;
+}  
+
+/* ====== NUEVO ENCABEZADO DEL PERFIL ====== */
+
+.profile-header{
+display:flex;
+align-items:center;
+justify-content:flex-start;
+gap:20px;
+margin:35px 0 25px;
+text-align:left;
+overflow:hidden;
+}
+
+.profile-info{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+min-width:0;
+overflow:hidden;
+}
+
+.hello{
+font-size:18px;
+font-weight:600;
+color:#d4af37;
+margin-bottom:2px;
+}
+
+#displayName{
+width:100%;
+max-width:100%;
+min-width:0;
+box-sizing:border-box;
+background:transparent;
+border:none;
+outline:none;
+box-shadow:none;
+padding:0;
+margin:0 0 4px 0;
+font-size:28px;
+font-weight:bold;
+line-height:1.1;
+color:#fff;
+text-align:left;
+font-size:24px;
+word-break:break-word;
+
+
+#displayName::placeholder{
+color:#ffffffaa;
+}
+
+
+.email{
+font-size:15px;
+color:#cfcfcf;
+line-height:1.35;
+margin-top:6px;
+overflow-wrap:anywhere;
+word-break:break-word;
+white-space:normal;
+max-width:100%;
+}
+
+.photo-buttons{
+display:flex;
+gap:20px;
+margin:20px 0;
+
+
+.photo-buttons .white-btn{
+flex:1;
+width:auto;
+
+}
+
+
+
+</style>
+  
+</head>
+<body>
+
+<div class="container">
+
+    <div class="title">The Grand Piano</div>
+    <div class="subtitle">Elegancia. Emoción. Perfección.</div>
+
+    <div class="profile-header">
+
+        <img id="profilePic" class="profile-pic" src="" alt="Foto">
+
+        <div class="profile-info">
+
+            <div class="hello">
+                Hola,
+            </div>
+
+            <input
+                type="text"
+                id="displayName"
+                placeholder="Tu nombre">
+
+            <div class="email" id="userEmail"></div>
+
+        </div>
+
+    </div>
+
+    <input type="file" id="profileInput" hidden>
+
+    <div class="photo-buttons">
+
+        <button class="white-btn"
+        onclick="document.getElementById('profileInput').click()">
+            Editar foto
+        </button>
+
+        <button class="white-btn"
+        id="savePhotoBtn">
+            Guardar foto
+        </button>
+
+    </div>
+
+    <button
+        class="white-btn"
+        id="saveNameBtn">
+        Guardar nombre
+    </button>
+
+
+    <button class="white-btn"
+        onclick="location.href='index.html'">
+        Entrar al Piano
+    </button>
+
+
+<button class="white-btn" id="shopBtn">
+    🛒 Tienda Premium
+</button>
+
+    <button class="dark-btn"
+        onclick="openAdmin()">
+        Panel Admin
+    </button>
+
+    <button
+        class="dark-btn"
+        id="logoutBtn">
+        Cerrar sesión
+    </button>
+
+    <div class="brand">
+        Desarrollado por JFAM &amp; Co. Piano Studios.
+    </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+getAuth,
+onAuthStateChanged,
+signOut,
+updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyArKUqthRHDrO1xXn39wJP-JCiBZdilOcY",
+authDomain: "piano-deluxe-premium.firebaseapp.com",
+projectId: "piano-deluxe-premium",
+storageBucket: "piano-deluxe-premium.firebasestorage.app",
+messagingSenderId: "79307845171",
+appId: "1:79307845171:web:c21918694f6d916fbbfd46"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+const profilePic = document.getElementById("profilePic");
+const profileInput = document.getElementById("profileInput");
+const userEmail = document.getElementById("userEmail");
+const displayName = document.getElementById("displayName");
+
+let selectedFile = null;
+
+onAuthStateChanged(auth, async(user)=>{
+
+if(!user){
+location.href="login.html";
+return;
+}
+
+userEmail.textContent = user.email;
+
+const userDoc = await getDoc(doc(db,"users",user.uid));
+
+if(userDoc.exists()){
+const data = userDoc.data();
+
+if(data.customPhoto){
+profilePic.src = data.customPhoto;
+}
+
+if(data.customName){
+displayName.value = data.customName;
+}else{
+displayName.value = user.displayName || "";
+}
+}else{
+profilePic.src = user.photoURL || "";
+displayName.value = user.displayName || "";
+}
+
+});
+
+profileInput.addEventListener("change",(e)=>{
+selectedFile = e.target.files[0];
+
+if(selectedFile){
+profilePic.src = URL.createObjectURL(selectedFile);
+}
+});
+
+document.getElementById("savePhotoBtn").onclick = async()=>{
+
+const user = auth.currentUser;
+
+if(!selectedFile || !user){
+alert("Selecciona una foto primero");
+return;
+}
+
+const storageRef = ref(
+storage,
+"profile_pictures/"+user.uid
+);
+
+await uploadBytes(storageRef,selectedFile);
+
+const photoURL =
+await getDownloadURL(storageRef);
+
+await updateProfile(user,{
+photoURL:photoURL
+});
+
+await setDoc(
+doc(db,"users",user.uid),
+{
+customPhoto:photoURL
+},
+{merge:true}
+);
+
+alert("Foto guardada correctamente 📸");
+};
+
+document.getElementById("saveNameBtn").onclick = async()=>{
+
+const user = auth.currentUser;
+const newName = displayName.value.trim();
+
+if(!newName){
+alert("Ingresa un nombre");
+return;
+}
+
+await updateProfile(user,{
+displayName:newName
+});
+
+await setDoc(
+doc(db,"users",user.uid),
+{
+customName:newName
+},
+{merge:true}
+);
+
+alert("Nombre guardado correctamente ✍️");
+};
+
+document.getElementById("logoutBtn")
+.onclick = async()=>{
+
+await signOut(auth);
+
+location.href="login.html";
+
+};
+
+
+document.getElementById("shopBtn").addEventListener("click", () => {
+    window.location.href = "shop.html";
+});
+
+
+
+window.openAdmin = function(){
+
+const defaultPass = "Flor 7272";
+const savedPass =
+localStorage.getItem("adminPassword") || defaultPass;
+
+const pass = prompt("Ingrese contraseña Admin:");
+
+if(pass === savedPass){
+location.href = "admin.html";
+}else{
+alert("Contraseña incorrecta");
+}
+
+};
+</script>
+
+</body>
+</html>
