@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -13,319 +14,317 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+font-family:Arial,Helvetica,sans-serif;
 }
-
 
 body{
+
 background:
-linear-gradient(rgba(0,0,0,.80),rgba(0,0,0,.92)),
+linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.92)),
 url("background.png") center/cover no-repeat fixed;
+
 color:#fff;
-padding:18px;
+padding:22px;
+
 }
 
-
 .container{
-max-width:720px;
+
+max-width:760px;
 margin:auto;
-padding:24px;
-background:rgba(20,20,20,.94);
-border:1px solid rgba(255,255,255,.08);
-border-radius:24px;
-backdrop-filter:blur(18px);
-box-shadow:0 12px 40px rgba(0,0,0,.45);
+
+background:#151515;
+
+border:1px solid rgba(212,175,55,.18);
+
+border-radius:30px;
+
+padding:26px;
+
+box-shadow:
+0 0 40px rgba(212,175,55,.08);
+
 }
 
 .topbar{
+
 display:flex;
 align-items:center;
 justify-content:space-between;
-margin-bottom:24px;
-padding-bottom:16px;
-border-bottom:1px solid rgba(255,255,255,.08);
+
+margin-bottom:20px;
+
 }
 
 .back-btn{
-width:42px;
-height:42px;
-border:none;
-border-radius:12px;
-background:#232323;
-color:#fff;
-font-size:20px;
-cursor:pointer;
-transition:.2s;
-}
 
-.back-btn:hover{
-background:#2f2f2f;
+width:52px;
+height:52px;
+
+border:none;
+
+border-radius:15px;
+
+background:#232323;
+
+color:#fff;
+
+font-size:24px;
+
+cursor:pointer;
+
 }
 
 .page-title{
+
 flex:1;
-text-align:center;
-font-size:22px;
-font-weight:700;
-color:#fff;
-letter-spacing:.3px;
+
+margin-left:16px;
+
+font-size:24px;
+
+font-weight:bold;
+
 }
 
 .page-icon{
-width:42px;
-text-align:right;
-font-size:20px;
+
+font-size:32px;
+
 color:#d4af37;
+
 }
 
-.title{
-font-size:32px;
-font-weight:700;
-text-align:center;
-color:#f5f5f5;
-letter-spacing:.5px;
-margin-bottom:8px;
+hr{
+
+border:none;
+
+height:1px;
+
+background:#2a2a2a;
+
+margin:18px 0 26px;
+
 }
 
 .subtitle{
-max-width:480px;
-margin:0 auto 28px;
+
 text-align:center;
-font-size:15px;
+
+font-size:17px;
+
 line-height:1.6;
-color:#a7a7a7;
+
+color:#b8b8b8;
+
+margin-bottom:28px;
+
 }
 
 .wallet-panel{
-padding:16px;
-border-radius:16px;
-background:#181818;
-border:1px solid rgba(255,255,255,.08);
-margin-bottom:22px;
+
+background:#1c1c1c;
+
+border-radius:22px;
+
+padding:24px;
+
+margin-bottom:30px;
+
+border:1px solid #2a2a2a;
+
 }
 
-
 .wallet-label{
-font-size:14px;
-font-weight:600;
-letter-spacing:.5px;
+
+font-size:15px;
+
+font-weight:bold;
+
+color:#9d9d9d;
+
 text-transform:uppercase;
-color:#9f9f9f;
-margin-bottom:10px;
+
 }
 
 .wallet-balance{
-font-size:34px;
-font-weight:700;
+
+margin-top:10px;
+
+font-size:56px;
+
+font-weight:bold;
+
 color:#d4af37;
+
 }
-
-<h2 class="packages-title">
-Paquetes disponibles
-</h2>
-
-.packages-title{
-font-size:18px;
-font-weight:700;
-margin:30px 0 18px;
-color:#f5f5f5;
-}
-
 
 .package-card{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:16px 18px;
-margin:10px 0;
-background:#181818;
-border:1px solid rgba(255,255,255,.08);
-border-radius:16px;
-transition:.25s ease;
-}
 
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+background:#1c1c1c;
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:18px;
+
+padding:18px 20px;
+
+margin-bottom:14px;
+
+transition:.25s;
+
+}
 
 .package-card:hover{
-transform:translateY(-3px) scale(1.01);
+
+transform:translateY(-2px);
+
 border-color:#d4af37;
-box-shadow:
-0 12px 35px rgba(0,0,0,.45),
-0 0 18px rgba(212,175,55,.12);
+
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+
 }
 
+.package-info{
 
-.buy-btn:active{
-transform:scale(.97);
+display:flex;
+
+flex-direction:column;
+
+gap:6px;
+
 }
 
 .package-coins{
+
 font-size:22px;
+
 font-weight:700;
+
 color:#fff;
-margin:0;
-}
 
-
-.package-badge{
-display:inline-flex;
-align-items:center;
-width:max-content;
-padding:4px 10px;
-margin-bottom:8px;
-border-radius:999px;
-background:rgba(212,175,55,.12);
-color:#d4af37;
-font-size:11px;
-font-weight:700;
-letter-spacing:.3px;
-border:1px solid rgba(212,175,55,.30);
-}
-
-
-.package-usd{
-font-size:16px;
-color:#bdbdbd;
-}
-
-.package-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-width:100%;
-}
-
-.package-bottom{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:10px;
-gap:16px;
-}
-
-.package-tag{
-display:inline-flex;
-align-items:center;
-padding:5px 12px;
-border-radius:999px;
-background:rgba(212,175,55,.12);
-border:1px solid rgba(212,175,55,.25);
-color:#d4af37;
-font-size:12px;
-font-weight:600;
 }
 
 .package-price{
-font-size:20px;
-font-weight:700;
+
+font-size:16px;
+
+font-weight:600;
+
 color:#d4af37;
+
 }
 
-.package-coins{
-font-size:24px;
-font-weight:700;
-color:#fff;
+.package-tag{
+
+display:inline-block;
+
+padding:4px 10px;
+
+background:rgba(212,175,55,.12);
+
+border:1px solid rgba(212,175,55,.25);
+
+border-radius:999px;
+
+font-size:11px;
+
+color:#d4af37;
+
+width:max-content;
+
 }
 
 .buy-btn{
-min-width:110px;
-height:42px;
-padding:0 18px;
-border:none;
-border-radius:10px;
-background:#d4af37;
-color:#111;
-font-size:14px;
-font-weight:700;
-cursor:pointer;
-transition:.2s;
-}
 
+padding:12px 18px;
+
+border:none;
+
+border-radius:12px;
+
+background:#d4af37;
+
+color:#111;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
 
 .buy-btn:hover{
-background:#e6c75d;
-transform:translateY(-1px);
-}
 
+background:#e7c85d;
+
+}
 
 .modal{
 display:none;
 position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
+inset:0;
 background:rgba(0,0,0,.75);
 justify-content:center;
 align-items:center;
-z-index:99999;
 padding:20px;
+z-index:9999;
 }
-
 
 .modal-content{
-width:90%;
-max-width:360px;
-background:#1b1b1b;
-border:1px solid #d4af37;
-border-radius:24px;
+width:100%;
+max-width:400px;
+background:#1c1c1c;
+border:1px solid rgba(212,175,55,.30);
+border-radius:20px;
 padding:24px;
 text-align:center;
-box-shadow:0 20px 50px rgba(0,0,0,.5);
-margin:auto;
+box-shadow:0 20px 60px rgba(0,0,0,.45);
 }
-
 
 .modal-content h2{
-color:#d4af37;
+font-size:24px;
 margin-bottom:15px;
+color:#fff;
 }
 
-
-.modal-content p{
-font-size:18px;
+#modalCoins,
+#modalPrice{
+font-size:20px;
+font-weight:700;
 margin:10px 0;
+color:#d4af37;
 }
-
 
 .modal-buttons{
 display:flex;
 gap:12px;
-margin-top:20px;
+margin-top:22px;
 }
-
 
 .modal-buttons button{
 flex:1;
 padding:14px;
 border:none;
 border-radius:12px;
-font-size:16px;
-font-weight:bold;
+font-weight:700;
 cursor:pointer;
 }
-
 
 #continuePurchase{
 background:#d4af37;
 color:#111;
 }
 
-
 #closeModal{
-background:#444;
+background:#333;
 color:#fff;
 }
-
-
-#modalCoins,
-#modalPrice{
-font-size:24px;
-font-weight:bold;
-margin:14px 0;
-color:#fff;
-}
-
 
 </style>
 
@@ -335,22 +334,23 @@ color:#fff;
 
 <div class="container">
 
-
 <div class="topbar">
 
-    <button class="back-btn" onclick="history.back()">
-        ←
-    </button>
+<button class="back-btn" onclick="history.back()">
+←
+</button>
 
-    <div class="page-title">
-        Recargar monedas
-    </div>
+<div class="page-title">
+Recargar monedas
+</div>
 
-    <div class="page-icon">
-        🪙
-    </div>
+<div class="page-icon">
+🪙
+</div>
 
 </div>
+
+<hr>
 
 <div class="subtitle">
 Compra monedas de forma rápida y segura mediante transferencia bancaria.
@@ -365,618 +365,32 @@ Saldo disponible
 <div class="wallet-balance" id="coinBalance">
 0 Monedas
 </div>
-</div>
 
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 50 Monedas
-            </div>
-
-            <div class="package-price">
-                $40 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="50"
-        data-price="$40 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 100 Monedas
-            </div>
-
-            <div class="package-price">
-                $80 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="100"
-        data-price="$80 MXN">
-        Comprar →
-        </button>
-
-    </div>
-
-</div>
 </div>
 
 <div class="package-card">
 
-    <div class="package-info">
+<div class="package-info">
 
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 380 Monedas
-            </div>
-
-            <div class="package-price">
-                $150 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-
-        <button class="buy-btn"
-        data-coins="380"
-        data-price="$150 MXN">
-        Comprar →
-        </button>
-
-    </div>
-
-</div>
+<div class="package-coins">
+🪙 50 Monedas
 </div>
 
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 600 Monedas
-            </div>
-
-            <div class="package-price">
-                $250 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="600"
-        data-price="$250 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
+<div class="package-price">
+$40 MXN
 </div>
 
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 900 Monedas
-            </div>
-
-            <div class="package-price">
-                $350 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="900"
-        data-price="$350 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
+<div class="package-tag">
+Popular
 </div>
 
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 1,500 Monedas
-            </div>
-
-            <div class="package-price">
-                $650 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-       <button class="buy-btn"
-        data-coins="1500"
-        data-price="$650 MXN">
-        Comprar →
-        </button>
-
-    </div>
-
-</div>
 </div>
 
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 3,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $1,200 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="3000"
-        data-price="$1200 MXN">
-        Comprar →
-        </button>
-
-    </div>
+<button
+class="buy-btn"
+data-coins="50"
+data-price="$40 MXN">
+Comprar
+</button>
 
 </div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 4,500 Monedas
-            </div>
-
-            <div class="package-price">
-                $1,700 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="4500"
-        data-price="$1700 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 8,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $3,500 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="8000"
-        data-price="$3500 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 10,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $4,200 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="10000"
-        data-price="$4200 MXN">
-        Comprar →
-        </button>
-
-        </div>
-
-    </div>
-</div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 15,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $5,000 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="15000"
-        data-price="$5000 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 20,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $8,000 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="20000"
-        data-price="$8000 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 50,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $20,000 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="50000"
-        data-price="$20000 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 100,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $40,000 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="100000"
-        data-price="$40000 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 250,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $65,000 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="250000"
-        data-price="$65000 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 400,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $80,000 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="400000"
-        data-price="$80000 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-<div class="package-card">
-
-    <div class="package-info">
-
-        <div class="package-header">
-
-            <div class="package-coins">
-                🪙 500,000 Monedas
-            </div>
-
-            <div class="package-price">
-                $100,000 MXN
-            </div>
-
-        </div>
-
-        <div class="package-bottom">
-
-            <span class="package-tag">
-                Popular
-            </span>
-
-        <button class="buy-btn"
-        data-coins="500000"
-        data-price="$100000 MXN">
-        Comprar →
-        </button>
-
-    </div>
-</div>
-</div>
-
-
-<div id="purchaseModal" class="modal">
-
-    <div class="modal-content">
-
-        <h2>Comprar monedas</h2>
-
-        <p id="modalCoins"></p>
-
-        <p id="modalPrice"></p>
-
-        <div class="modal-buttons">
-
-            <button id="continuePurchase">
-                Continuar
-            </button>
-
-            <button id="closeModal">
-                Cancelar
-            </button>
-
-        </div>
-
-    </div>
-
-
-<script>
-
-const modal = document.getElementById("purchaseModal");
-const modalCoins = document.getElementById("modalCoins");
-const modalPrice = document.getElementById("modalPrice");
-
-const closeModal = document.getElementById("closeModal");
-
-
-const buyButtons = document.querySelectorAll(".buy-btn");
-
-buyButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        const coins = button.dataset.coins;
-        const price = button.dataset.price;
-
-        modalCoins.textContent = "🪙 " + coins + " Monedas";
-        modalPrice.textContent = "💰 " + price;
-
-        modal.style.display = "flex";
-
-    });
-
-});
-
-</script>
-
-
-</body>
-</html>
