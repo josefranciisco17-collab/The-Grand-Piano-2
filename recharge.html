@@ -124,13 +124,12 @@ color:#d4af37;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:#1c1c1c;
-border:1px solid rgba(255,255,255,.08);
-border-radius:22px;
-padding:22px;
-margin-bottom:18px;
-min-height:140px;
-transition:.25s;
+gap:36px;
+padding:30px 34px;
+margin:26px 0;
+border-radius:28px;
+min-height:170px;
+box-sizing:border-box;
 }
 
 
@@ -142,9 +141,9 @@ box-shadow:0 10px 30px rgba(0,0,0,.35);
 
 
 .package-info{
-display:flex;
-flex-direction:column;
-gap:6px;
+flex:1;
+min-width:0;
+padding-right:20px;
 }
 
 
@@ -173,24 +172,20 @@ color:#d4af37;
 width:max-content;
 }
 
-
 .buy-btn{
-min-width:170px;
-height:56px;
-border:none;
-border-radius:16px;
-background:#d4af37;
-color:#111;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-transition:.25s;
-text-decoration:none;
+width:220px;
+height:78px;
+margin-left:28px;
+margin-right:8px;
+border-radius:20px;
 display:flex;
 align-items:center;
 justify-content:center;
+flex-shrink:0;
+font-size:2rem;
+font-weight:700;
+text-decoration:none;
 }
-
 
 buy-btn:hover{
 background:#e7c85d;
