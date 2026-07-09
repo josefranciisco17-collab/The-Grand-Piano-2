@@ -722,10 +722,12 @@ document.getElementById("continueBuy").onclick = ()=>{
         return;
     }
 
-    const finalURL = stripeURL + "?client_reference_id=" + encodeURIComponent(currentUser.uid);
-
     window.open(finalURL,"_blank");
-};
+
+const separator = stripeURL.includes("?") ? "&" : "?";
+const finalURL = stripeURL + separator + "client_reference_id=" + encodeURIComponent(currentUser.uid);
+
+window.location.href = finalURL;
 
 
 </script>
