@@ -516,3 +516,17 @@ Comprar →
 </button>
 
 </div>
+</div>
+
+<script>
+document.querySelectorAll(".buy-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const coins = btn.dataset.coins;
+    const price = btn.dataset.price;
+    alert(`Solicitud de compra:\n${coins} monedas\n${price}\n\nPronto se conectará con Stripe.`);
+  });
+});
+</script>
+
+</body>
+</html>
