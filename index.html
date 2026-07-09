@@ -583,6 +583,14 @@ let audioCtx;
 let sustain=false;
 let locked=false;
 const cache={};
+
+/* ===== AUDIO EN CLOUDFLARE R2 =====
+   Reemplaza esta URL por tu URL pública de R2.
+   Debe terminar en /audio/
+   Ejemplo:
+   const AUDIO_BASE_URL = "https://pub-xxxxxxxx.r2.dev/audio/";
+*/
+const AUDIO_BASE_URL = "https://pub-4b07d261ece945a085379075c5814f5f.r2.dev/audio/";
 let currentMidiFile = null;
 let midiStartTime = 0;
 let pausedTime = 0;
@@ -693,7 +701,7 @@ const semitones=
 midi-noteToMidi(best);
 
 return{
-file:`audio/${best}v8.mp3`,
+file:`${AUDIO_BASE_URL}${best}v8.mp3`,
 rate:Math.pow(2,semitones/12)
 };
 }
