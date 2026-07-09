@@ -666,7 +666,35 @@ Saldo disponible
   </div>
 </div>
 
-<script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyArKUqthHRdO1xXn39wJP-JCiBZdi1OcY",
+  authDomain: "piano-deluxe-premium.firebaseapp.com",
+  projectId: "piano-deluxe-premium",
+  storageBucket: "piano-deluxe-premium.firebasestorage.app",
+  messagingSenderId: "79307845171",
+  appId: "1:79307845171:web:c21918694f6d916fbbfd46"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+let currentUser = null;
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        location.href = "login.html";
+        return;
+    }
+    currentUser = user;
+});
+
+
+
 let stripeURL = "";
 
 document.querySelectorAll(".stripe-buy").forEach(btn=>{
@@ -684,9 +712,22 @@ document.getElementById("cancelBuy").onclick = ()=>{
   document.getElementById("buyModal").classList.remove("show");
 };
 
-document.getElementById("continueBuy").onclick = ()=>{
-  window.open(stripeURL, "_blank");
+    window.open(stripeURL,"_blank");
 };
+
+document.getElementById("continueBuy").onclick = ()=>{
+
+    if(!currentUser){
+        alert("Debes iniciar sesión.");
+        return;
+    }
+
+    const finalURL = stripeURL + "?client_reference_id=" + encodeURIComponent(currentUser.uid);
+
+    window.open(finalURL,"_blank");
+};
+
+
 </script>
 
 </body>
