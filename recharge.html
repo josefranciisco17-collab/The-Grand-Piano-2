@@ -606,15 +606,6 @@ Comprar →
 </div>
 </div>
 
-<script>
-document.querySelectorAll(".buy-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const coins = btn.dataset.coins;
-    const price = btn.dataset.price;
-    alert(`Solicitud de compra:\n${coins} monedas\n${price}\n\nPronto se conectará con Stripe.`);
-  });
-});
-</script>
 
 <div id="buyModal" class="buy-modal">
   <div class="buy-modal-box">
