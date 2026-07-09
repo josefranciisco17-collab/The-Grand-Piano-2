@@ -839,6 +839,12 @@ keyboard.appendChild(key);
 }
 
 
+/* BLOQUEAR ZOOM IOS SIN AFECTAR MULTITOUCH */
+document.addEventListener("gesturestart", e => e.preventDefault());
+document.addEventListener("gesturechange", e => e.preventDefault());
+document.addEventListener("gestureend", e => e.preventDefault());
+
+
 </script>
 
 </body>
