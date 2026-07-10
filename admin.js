@@ -183,9 +183,10 @@ adminCards.forEach((card) => {
             return;
         }
 
-
 if (section === "players") {
-    renderPlayersSection();
+    if (typeof window.renderPlayersSection === "function") {
+        window.renderPlayersSection();
+    }
     return;
 }
 
