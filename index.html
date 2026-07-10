@@ -630,19 +630,112 @@ closeSongs.onclick = () => {
 
 };
 
-document.querySelectorAll(".song-item").forEach(btn=>{
-btn.onclick=async()=>{
-const file=btn.dataset.file;
 
-songsModal.classList.add("hidden");
+const songsListElement = document.getElementById("songsList");
 
-if(window.currentMidi){
-window.currentMidi.stop();
+/* Reproducir canciones manuales y automáticas */
+songsListElement.addEventListener("click", (event) => {
+  const btn = event.target.closest(".song-item");
+
+  if (!btn || !songsListElement.contains(btn)) {
+    return;
+  }
+
+  const file = btn.dataset.file;
+
+  if (!file) {
+    return;
+  }
+
+  songsModal.classList.add("hidden");
+
+  if (window.currentMidi) {
+    window.currentMidi.stop();
+  }
+
+  loadMidi(file);
+});
+
+/* Cargar automáticamente los MIDI publicados */
+async function loadCatalogSongs() {
+  try {
+    const response = await fetch(
+      `midis/catalog.json?v=${Date.now()}`,
+      {
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `No se pudo cargar el catálogo: ${response.status}`
+      );
+    }
+
+    const catalog = await response.json();
+
+    const existingFiles = new Set(
+      Array.from(
+        songsListElement.querySelectorAll(".song-item")
+      ).map((button) => button.dataset.file)
+    );
+
+    const publishedSongs = Object.entries(catalog)
+      .filter(([, information]) => {
+        return information && information.active === true;
+      })
+      .sort(([, first], [, second]) => {
+        const firstName = first.songName || "";
+        const secondName = second.songName || "";
+
+        return firstName.localeCompare(
+          secondName,
+          "es",
+          {
+            sensitivity: "base"
+          }
+        );
+      });
+
+    publishedSongs.forEach(([fileName, information]) => {
+      const filePath = `midis/${fileName}`;
+
+      if (existingFiles.has(filePath)) {
+        return;
+      }
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "song-item";
+      button.dataset.file = filePath;
+
+      const songName = String(
+        information.songName ||
+        fileName.replace(/\.(mid|midi)$/i, "")
+      ).replaceAll("_", " ");
+
+      const artist = String(
+        information.artist || ""
+      ).trim();
+
+      button.textContent = artist
+        ? `${songName} — ${artist}`
+        : songName;
+
+      songsListElement.appendChild(button);
+      existingFiles.add(filePath);
+    });
+
+  } catch (error) {
+    console.error(
+      "Error cargando el catálogo MIDI:",
+      error
+    );
+  }
 }
 
-loadMidi(file);
-};
-});
+loadCatalogSongs();
+
 
 const mainTitle=document.getElementById("mainTitle");
 const brandText=document.getElementById("brandText");
