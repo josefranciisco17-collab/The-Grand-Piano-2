@@ -1,6 +1,9 @@
 "use strict";
 
 (function () {
+  const UPLOAD_MIDI_URL =
+    "https://us-central1-piano-deluxe-premium.cloudfunctions.net/uploadMidi";
+
   const midiButton = document.querySelector(
     '.admin-card[data-section="midis"]'
   );
@@ -227,8 +230,8 @@
             '<span>🎼</span>' +
             '<h3>Biblioteca preparada</h3>' +
             '<p>' +
-              'La interfaz funciona. En la siguiente fase conectaremos ' +
-              'la subida con GitHub.' +
+              'Los archivos que subas correctamente aparecerán aquí. ' +
+              '' +
             '</p>' +
           '</div>' +
 
@@ -272,6 +275,11 @@
     const previewCard =
       document.getElementById("midiPreviewCard");
 
+    const submitButton =
+      document.getElementById("submitMidiButton");
+
+    let readyToUpload = false;
+
     openButton.addEventListener("click", function () {
       uploadPanel.classList.remove("hidden");
 
@@ -295,6 +303,9 @@
       clearMessage(formMessage);
       previewCard.classList.add("hidden");
       previewCard.innerHTML = "";
+      readyToUpload = false;
+      submitButton.textContent = "Revisar información";
+      submitButton.disabled = false;
 
       if (!file) {
         resetFileInformation();
@@ -332,7 +343,7 @@
         '</div>';
     });
 
-    uploadForm.addEventListener("submit", function (event) {
+    uploadForm.addEventListener("submit", async function (event) {
       event.preventDefault();
 
       const songName =
@@ -472,16 +483,109 @@ previewCard.innerHTML =
 
       previewCard.classList.remove("hidden");
 
+      if (!readyToUpload) {
+        readyToUpload = true;
+        submitButton.textContent = "Subir MIDI a GitHub";
+
+        showMessage(
+          formMessage,
+          "Información validada. Revisa los datos y pulsa “Subir MIDI a GitHub”.",
+          "success"
+        );
+
+        previewCard.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Subiendo MIDI...";
+      cancelButton.disabled = true;
+      closeButton.disabled = true;
+
       showMessage(
         formMessage,
-        "Información validada correctamente. En la siguiente fase este botón subirá el MIDI a GitHub.",
+        "Subiendo el archivo a GitHub. No cierres esta pantalla.",
         "success"
       );
 
-      previewCard.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-      });
+      try {
+        const fileBase64 = await readFileAsBase64(file);
+
+        const response = await fetch(UPLOAD_MIDI_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            fileName: file.name,
+            fileBase64: fileBase64,
+            songName: songName,
+            artist: artist,
+            difficulty: difficulty,
+            category: category,
+            price: price,
+            active: active
+          })
+        });
+
+        let result = {};
+
+        try {
+          result = await response.json();
+        } catch (jsonError) {
+          throw new Error(
+            "La función respondió, pero no devolvió información válida."
+          );
+        }
+
+        if (!response.ok || !result.success) {
+          throw new Error(
+            result.message ||
+            "No fue posible subir el archivo a GitHub."
+          );
+        }
+
+        showMessage(
+          formMessage,
+          result.message || "MIDI subido correctamente a GitHub.",
+          "success"
+        );
+
+        submitButton.textContent = "MIDI subido correctamente";
+        addUploadedMidiToList(result.file, file.size);
+
+        uploadForm.reset();
+        resetFileInformation();
+        readyToUpload = false;
+
+        setTimeout(function () {
+          previewCard.classList.add("hidden");
+          previewCard.innerHTML = "";
+          submitButton.textContent = "Revisar información";
+          submitButton.disabled = false;
+          cancelButton.disabled = false;
+          closeButton.disabled = false;
+        }, 1800);
+      } catch (error) {
+        console.error("Error al subir el MIDI:", error);
+
+        showMessage(
+          formMessage,
+          error.message ||
+          "Ocurrió un error al subir el MIDI.",
+          "error"
+        );
+
+        submitButton.textContent = "Intentar subir nuevamente";
+        submitButton.disabled = false;
+        cancelButton.disabled = false;
+        closeButton.disabled = false;
+        readyToUpload = true;
+      }
     });
 
     function closeMidiForm() {
@@ -491,6 +595,90 @@ previewCard.innerHTML =
       clearMessage(formMessage);
       previewCard.classList.add("hidden");
       previewCard.innerHTML = "";
+      readyToUpload = false;
+      submitButton.textContent = "Revisar información";
+      submitButton.disabled = false;
+      cancelButton.disabled = false;
+      closeButton.disabled = false;
+    }
+  }
+
+  function readFileAsBase64(file) {
+    return new Promise(function (resolve, reject) {
+      const reader = new FileReader();
+
+      reader.onload = function () {
+        const result = String(reader.result || "");
+        const commaIndex = result.indexOf(",");
+
+        if (commaIndex === -1) {
+          reject(new Error("No se pudo convertir el archivo MIDI."));
+          return;
+        }
+
+        resolve(result.slice(commaIndex + 1));
+      };
+
+      reader.onerror = function () {
+        reject(new Error("No se pudo leer el archivo MIDI."));
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function addUploadedMidiToList(fileData, originalSize) {
+    const midiList = document.getElementById("midiList");
+    const countText = document.getElementById("midiCountText");
+
+    if (!midiList || !fileData) {
+      return;
+    }
+
+    const emptyState =
+      midiList.querySelector(".midi-empty-state");
+
+    if (emptyState) {
+      emptyState.remove();
+    }
+
+    const card = document.createElement("article");
+    card.className = "midi-item-card";
+
+    card.innerHTML =
+      '<div class="midi-item-top">' +
+        '<div class="midi-item-icon">🎹</div>' +
+        '<div class="midi-item-information">' +
+          '<h4>' + escapeHtml(fileData.songName || fileData.name) + '</h4>' +
+          '<p>' +
+            escapeHtml(fileData.artist || "Sin artista") +
+            ' · ' +
+            formatFileSize(originalSize || 0) +
+          '</p>' +
+        '</div>' +
+        '<span class="midi-item-status">' +
+          (fileData.active ? "Publicada" : "Oculta") +
+        '</span>' +
+      '</div>' +
+      '<div class="midi-item-actions">' +
+        '<a class="midi-action-button" ' +
+          'href="' + escapeHtml(fileData.url || "#") + '" ' +
+          'target="_blank" rel="noopener noreferrer">' +
+          'Ver en GitHub' +
+        '</a>' +
+      '</div>';
+
+    midiList.prepend(card);
+
+    const currentCount =
+      midiList.querySelectorAll(".midi-item-card").length;
+
+    if (countText) {
+      countText.textContent =
+        currentCount +
+        (currentCount === 1
+          ? " archivo MIDI"
+          : " archivos MIDI");
     }
   }
 
