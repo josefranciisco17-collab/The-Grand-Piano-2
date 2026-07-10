@@ -181,10 +181,6 @@ if (section === "home") {
   return;
 }
 
-if (section === "settings") {
-  renderSettingsSection();
-  return;
-}
 
 const section = card.dataset.section;
 
