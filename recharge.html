@@ -669,13 +669,10 @@ Saldo disponible
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  onAuthStateChanged,
-  setPersistence,
-  browserLocalPersistence
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+  getAuth
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyArKUqthHRdO1xXn39wJP-JCiBZdi1OcY",
@@ -689,61 +686,59 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-await setPersistence(auth, browserLocalPersistence);
+/* Esperar a que Firebase termine de recuperar la sesión */
+await auth.authStateReady();
 
-let currentUser = null;
+const currentUser = auth.currentUser;
 
-
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    setTimeout(() => {
-      if (!auth.currentUser) {
-        window.location.href = "login.html";
-      }
-    }, 1500);
-    return;
-  }
-
-  currentUser = user;
-});
-
+/* Solo enviar al login cuando realmente no existe sesión */
+if (!currentUser) {
+  window.location.replace("login.html");
+  throw new Error("Usuario no autenticado");
+}
 
 let stripeURL = "";
 
-document.querySelectorAll(".stripe-buy").forEach(btn=>{
-  btn.addEventListener("click", e=>{
-    e.preventDefault();
+document.querySelectorAll(".stripe-buy").forEach((btn) => {
+  btn.addEventListener("click", (event) => {
+    event.preventDefault();
 
     stripeURL = btn.href;
-    document.getElementById("modalCoins").textContent = btn.dataset.coins + " Monedas";
-    document.getElementById("modalPrice").textContent = btn.dataset.price;
+
+    document.getElementById("modalCoins").textContent =
+      btn.dataset.coins + " Monedas";
+
+    document.getElementById("modalPrice").textContent =
+      btn.dataset.price;
+
     document.getElementById("buyModal").classList.add("show");
   });
 });
 
-document.getElementById("cancelBuy").onclick = ()=>{
+document.getElementById("cancelBuy").addEventListener("click", () => {
   document.getElementById("buyModal").classList.remove("show");
-};
+  stripeURL = "";
+});
 
+document.getElementById("continueBuy").addEventListener("click", () => {
+  if (!stripeURL) {
+    alert("Selecciona un paquete de monedas.");
+    return;
+  }
 
-document.getElementById("continueBuy").onclick = ()=>{
+  const separator = stripeURL.includes("?") ? "&" : "?";
 
-    if(!currentUser){
-        alert("Debes iniciar sesión.");
-        return;
-    }
+  const finalURL =
+    stripeURL +
+    separator +
+    "client_reference_id=" +
+    encodeURIComponent(currentUser.uid);
 
+  window.location.href = finalURL;
+});
 
-const separator = stripeURL.includes("?") ? "&" : "?";
+</script>
 
-const finalURL =
-  stripeURL +
-  separator +
-  "client_reference_id=" +
-  encodeURIComponent(currentUser.uid);
-
-window.open(finalURL, "_blank");
-};
 </script>
 
 </body>
