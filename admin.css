@@ -7,17 +7,16 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-background:
-    radial-gradient(circle at top, rgba(255,210,90,.18), transparent 35%),
-    radial-gradient(circle at bottom, rgba(255,180,40,.10), transparent 45%),
-    linear-gradient(180deg, #15110a 0%, #090909 35%, #000000 100%);
-background-attachment: fixed;
-  color: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Georgia,serif;
+    color:white;
+    background:
+        linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.92)),
+        url("background.png") center/cover no-repeat fixed;
 }
+
 
 button,
 input,
@@ -45,20 +44,18 @@ button {
   padding: 22px;
 }
 
-.login-card {
-  width: min(100%, 430px);
-  padding: 32px 24px;
-  border: 1px solid #303030;
-  border-radius: 30px;
-  background:
-    linear-gradient(
-      145deg,
-      #191919,
-      #0e0e0e
-    );
-  box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.55);
-  text-align: center;
+.login-card{
+    width:min(100%,430px);
+    padding:32px 24px;
+    border:1px solid rgba(212,175,55,.35);
+    border-radius:30px;
+    background:rgba(10,10,10,.92);
+    box-shadow:
+        0 0 40px rgba(212,175,55,.12),
+        0 0 20px rgba(255,255,255,.05);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    text-align:center;
 }
 
 .login-icon {
