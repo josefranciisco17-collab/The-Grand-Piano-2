@@ -730,6 +730,11 @@ textarea:focus {
   font-size: 12px;
   font-weight: 800;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;  
+
 }
 
 .midi-action-button:active {
