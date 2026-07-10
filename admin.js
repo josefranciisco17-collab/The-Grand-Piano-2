@@ -175,12 +175,6 @@ function showLoginMessage(message, type) {
 
 adminCards.forEach((card) => {
   card.addEventListener("click", () => {
-    
-if (section === "home") {
-  renderHomeSection();
-  return;
-}
-
 
 const section = card.dataset.section;
 
