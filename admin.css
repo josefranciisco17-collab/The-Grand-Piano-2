@@ -10,13 +10,11 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(
-      circle at top,
-      #202020 0%,
-      #090909 45%,
-      #000000 100%
-    );
+background:
+    radial-gradient(circle at top, rgba(255,210,90,.18), transparent 35%),
+    radial-gradient(circle at bottom, rgba(255,180,40,.10), transparent 45%),
+    linear-gradient(180deg, #15110a 0%, #090909 35%, #000000 100%);
+background-attachment: fixed;
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
 }
