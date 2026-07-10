@@ -8,5 +8,15 @@
     "active": true,
     "updatedAt": "2026-07-10T23:36:36.011Z",
     "uploadedAt": "2026-07-10T23:36:36.011Z"
+  },
+  "Harry-Potter-Hedwig-s-theme.mid": {
+    "songName": "Harry Potter",
+    "artist": "Movie Theme Songs",
+    "difficulty": "Media",
+    "category": "Películas",
+    "price": 100,
+    "active": true,
+    "updatedAt": "2026-07-10T23:49:42.224Z",
+    "uploadedAt": "2026-07-10T23:49:42.224Z"
   }
 }
