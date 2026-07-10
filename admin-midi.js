@@ -66,7 +66,8 @@
             '<button ' +
               'id="closeMidiFormButton" ' +
               'class="icon-close-button" ' +
-              'type="button"' +
+              'type="button" ' +
+              'aria-label="Cerrar formulario"' +
             '>' +
               '✕' +
             '</button>' +
@@ -111,10 +112,10 @@
               'required' +
             '>' +
               '<option value="">Selecciona una dificultad</option>' +
-              '<option value="facil">Fácil</option>' +
-              '<option value="media">Media</option>' +
-              '<option value="dificil">Difícil</option>' +
-              '<option value="experto">Experto</option>' +
+              '<option value="Fácil">Fácil</option>' +
+              '<option value="Media">Media</option>' +
+              '<option value="Difícil">Difícil</option>' +
+              '<option value="Experto">Experto</option>' +
             '</select>' +
 
             '<label for="midiCategory">' +
@@ -127,13 +128,13 @@
               'required' +
             '>' +
               '<option value="">Selecciona una categoría</option>' +
-              '<option value="clasica">Clásica</option>' +
-              '<option value="pop">Pop</option>' +
-              '<option value="kdrama">K-Drama</option>' +
-              '<option value="peliculas">Películas</option>' +
-              '<option value="videojuegos">Videojuegos</option>' +
-              '<option value="anime">Anime</option>' +
-              '<option value="otra">Otra</option>' +
+              '<option value="Clásica">Clásica</option>' +
+              '<option value="Pop">Pop</option>' +
+              '<option value="K-Drama">K-Drama</option>' +
+              '<option value="Películas">Películas</option>' +
+              '<option value="Videojuegos">Videojuegos</option>' +
+              '<option value="Anime">Anime</option>' +
+              '<option value="Otra">Otra</option>' +
             '</select>' +
 
             '<label for="midiPrice">' +
@@ -185,13 +186,27 @@
               '<span>Publicar la canción inmediatamente</span>' +
             '</label>' +
 
-            '<button ' +
-              'id="submitMidiButton" ' +
-              'class="primary-button" ' +
-              'type="submit"' +
-            '>' +
-              'Subir a GitHub' +
-            '</button>' +
+            '<div id="midiPreviewCard" class="midi-preview-card hidden"></div>' +
+
+            '<div class="midi-form-actions">' +
+
+              '<button ' +
+                'id="cancelMidiButton" ' +
+                'class="secondary-button" ' +
+                'type="button"' +
+              '>' +
+                'Cancelar' +
+              '</button>' +
+
+              '<button ' +
+                'id="submitMidiButton" ' +
+                'class="primary-button" ' +
+                'type="submit"' +
+              '>' +
+                'Revisar información' +
+              '</button>' +
+
+            '</div>' +
 
             '<p id="midiFormMessage" class="form-message"></p>' +
 
@@ -212,8 +227,8 @@
             '<span>🎼</span>' +
             '<h3>Biblioteca preparada</h3>' +
             '<p>' +
-              'La interfaz funciona. Después conectaremos la lista ' +
-              'con la carpeta <strong>midis</strong> de GitHub.' +
+              'La interfaz funciona. En la siguiente fase conectaremos ' +
+              'la subida con GitHub.' +
             '</p>' +
           '</div>' +
 
@@ -236,6 +251,9 @@
     const closeButton =
       document.getElementById("closeMidiFormButton");
 
+    const cancelButton =
+      document.getElementById("cancelMidiButton");
+
     const uploadPanel =
       document.getElementById("midiUploadPanel");
 
@@ -251,6 +269,9 @@
     const formMessage =
       document.getElementById("midiFormMessage");
 
+    const previewCard =
+      document.getElementById("midiPreviewCard");
+
     openButton.addEventListener("click", function () {
       uploadPanel.classList.remove("hidden");
 
@@ -261,14 +282,19 @@
     });
 
     closeButton.addEventListener("click", function () {
-      uploadPanel.classList.add("hidden");
-      uploadForm.reset();
-      resetFileInformation();
-      clearMessage(formMessage);
+      closeMidiForm();
+    });
+
+    cancelButton.addEventListener("click", function () {
+      closeMidiForm();
     });
 
     fileInput.addEventListener("change", function () {
       const file = fileInput.files[0];
+
+      clearMessage(formMessage);
+      previewCard.classList.add("hidden");
+      previewCard.innerHTML = "";
 
       if (!file) {
         resetFileInformation();
@@ -304,14 +330,47 @@
             formatFileSize(file.size) +
           '</small>' +
         '</div>';
-
-      clearMessage(formMessage);
     });
 
     uploadForm.addEventListener("submit", function (event) {
       event.preventDefault();
 
-      const file = fileInput.files[0];
+      const songName =
+        document.getElementById("midiSongName").value.trim();
+
+      const artist =
+        document.getElementById("midiArtist").value.trim();
+
+      const difficulty =
+        document.getElementById("midiDifficulty").value;
+
+      const category =
+        document.getElementById("midiCategory").value;
+
+      const priceValue =
+        document.getElementById("midiPrice").value;
+
+      const active =
+        document.getElementById("midiActive").checked;
+
+      const file =
+        fileInput.files[0];
+
+      if (
+        !songName ||
+        !artist ||
+        !difficulty ||
+        !category ||
+        priceValue === ""
+      ) {
+        showMessage(
+          formMessage,
+          "Completa todos los campos obligatorios.",
+          "error"
+        );
+
+        return;
+      }
 
       if (!file) {
         showMessage(
@@ -319,15 +378,92 @@
           "Debes seleccionar un archivo MIDI.",
           "error"
         );
+
         return;
       }
 
+      const price = Number(priceValue);
+
+      if (
+        !Number.isInteger(price) ||
+        price < 0
+      ) {
+        showMessage(
+          formMessage,
+          "El precio debe ser un número entero mayor o igual a cero.",
+          "error"
+        );
+
+        return;
+      }
+
+      previewCard.innerHTML =
+        '<p class="section-label">Vista previa</p>' +
+
+        '<div class="midi-preview-row">' +
+          '<span>Canción</span>' +
+          '<strong>' + escapeHtml(songName) + '</strong>' +
+        '</div>' +
+
+        '<div class="midi-preview-row">' +
+          '<span>Artista</span>' +
+          '<strong>' + escapeHtml(artist) + '</strong>' +
+        '</div>' +
+
+        '<div class="midi-preview-row">' +
+          '<span>Dificultad</span>' +
+          '<strong>' + escapeHtml(difficulty) + '</strong>' +
+        '</div>' +
+
+        '<div class="midi-preview-row">' +
+          '<span>Categoría</span>' +
+          '<strong>' + escapeHtml(category) + '</strong>' +
+        '</div>' +
+
+        '<div class="midi-preview-row">' +
+          '<span>Precio</span>' +
+          '<strong>' + price + ' monedas</strong>' +
+        '</div>' +
+
+        '<div class="midi-preview-row">' +
+          '<span>Archivo</span>' +
+          '<strong>' + escapeHtml(file.name) + '</strong>' +
+        '</div>' +
+
+        '<div class="midi-preview-row">' +
+          '<span>Tamaño</span>' +
+          '<strong>' + formatFileSize(file.size) + '</strong>' +
+        '</div>' +
+
+        '<div class="midi-preview-row">' +
+          '<span>Estado</span>' +
+          '<strong>' +
+            (active ? "Publicada" : "Oculta") +
+          '</strong>' +
+        '</div>';
+
+      previewCard.classList.remove("hidden");
+
       showMessage(
         formMessage,
-        "Formulario comprobado correctamente. Todavía no se ha subido el archivo a GitHub.",
+        "Información validada correctamente. En la siguiente fase este botón subirá el MIDI a GitHub.",
         "success"
       );
+
+      previewCard.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
     });
+
+    function closeMidiForm() {
+      uploadPanel.classList.add("hidden");
+      uploadForm.reset();
+      resetFileInformation();
+      clearMessage(formMessage);
+      previewCard.classList.add("hidden");
+      previewCard.innerHTML = "";
+    }
   }
 
   function resetFileInformation() {
