@@ -712,7 +712,6 @@ document.getElementById("cancelBuy").onclick = ()=>{
   document.getElementById("buyModal").classList.remove("show");
 };
 
-    window.open(stripeURL,"_blank");
 };
 
 document.getElementById("continueBuy").onclick = ()=>{
@@ -722,14 +721,17 @@ document.getElementById("continueBuy").onclick = ()=>{
         return;
     }
 
-    window.open(finalURL,"_blank");
 
 const separator = stripeURL.includes("?") ? "&" : "?";
-const finalURL = stripeURL + separator + "client_reference_id=" + encodeURIComponent(currentUser.uid);
 
-window.location.href = finalURL;
+const finalURL =
+  stripeURL +
+  separator +
+  "client_reference_id=" +
+  encodeURIComponent(currentUser.uid);
 
-
+window.open(finalURL, "_blank");
+};
 </script>
 
 </body>
