@@ -397,50 +397,78 @@
         return;
       }
 
-      previewCard.innerHTML =
-        '<p class="section-label">Vista previa</p>' +
 
-        '<div class="midi-preview-row">' +
-          '<span>Canción</span>' +
-          '<strong>' + escapeHtml(songName) + '</strong>' +
-        '</div>' +
+previewCard.innerHTML =
+  '<p class="section-label">Vista previa</p>' +
 
-        '<div class="midi-preview-row">' +
-          '<span>Artista</span>' +
-          '<strong>' + escapeHtml(artist) + '</strong>' +
-        '</div>' +
+  '<div class="midi-preview-row">' +
+    '<div class="midi-preview-icon">🎵</div>' +
+    '<div class="midi-preview-text">' +
+      '<span>Canción</span>' +
+      '<strong>' + escapeHtml(songName) + '</strong>' +
+    '</div>' +
+  '</div>' +
 
-        '<div class="midi-preview-row">' +
-          '<span>Dificultad</span>' +
-          '<strong>' + escapeHtml(difficulty) + '</strong>' +
-        '</div>' +
+  '<div class="midi-preview-row">' +
+    '<div class="midi-preview-icon">👤</div>' +
+    '<div class="midi-preview-text">' +
+      '<span>Artista</span>' +
+      '<strong>' + escapeHtml(artist) + '</strong>' +
+    '</div>' +
+  '</div>' +
 
-        '<div class="midi-preview-row">' +
-          '<span>Categoría</span>' +
-          '<strong>' + escapeHtml(category) + '</strong>' +
-        '</div>' +
+  '<div class="midi-preview-row">' +
+    '<div class="midi-preview-icon">⭐</div>' +
+    '<div class="midi-preview-text">' +
+      '<span>Dificultad</span>' +
+      '<strong>' + escapeHtml(difficulty) + '</strong>' +
+    '</div>' +
+  '</div>' +
 
-        '<div class="midi-preview-row">' +
-          '<span>Precio</span>' +
-          '<strong>' + price + ' monedas</strong>' +
-        '</div>' +
+  '<div class="midi-preview-row">' +
+    '<div class="midi-preview-icon">📂</div>' +
+    '<div class="midi-preview-text">' +
+      '<span>Categoría</span>' +
+      '<strong>' + escapeHtml(category) + '</strong>' +
+    '</div>' +
+  '</div>' +
 
-        '<div class="midi-preview-row">' +
-          '<span>Archivo</span>' +
-          '<strong>' + escapeHtml(file.name) + '</strong>' +
-        '</div>' +
+  '<div class="midi-preview-row">' +
+    '<div class="midi-preview-icon">🪙</div>' +
+    '<div class="midi-preview-text">' +
+      '<span>Precio</span>' +
+      '<strong>' + price + ' monedas</strong>' +
+    '</div>' +
+  '</div>' +
 
-        '<div class="midi-preview-row">' +
-          '<span>Tamaño</span>' +
-          '<strong>' + formatFileSize(file.size) + '</strong>' +
-        '</div>' +
+  '<div class="midi-preview-row">' +
+    '<div class="midi-preview-icon">📄</div>' +
+    '<div class="midi-preview-text">' +
+      '<span>Archivo</span>' +
+      '<strong>' + escapeHtml(file.name) + '</strong>' +
+    '</div>' +
+  '</div>' +
 
-        '<div class="midi-preview-row">' +
-          '<span>Estado</span>' +
-          '<strong>' +
-            (active ? "Publicada" : "Oculta") +
-          '</strong>' +
-        '</div>';
+  '<div class="midi-preview-row">' +
+    '<div class="midi-preview-icon">💾</div>' +
+    '<div class="midi-preview-text">' +
+      '<span>Tamaño</span>' +
+      '<strong>' + formatFileSize(file.size) + '</strong>' +
+    '</div>' +
+  '</div>' +
+
+  '<div class="midi-preview-row">' +
+    '<div class="midi-preview-icon">🌍</div>' +
+    '<div class="midi-preview-text">' +
+      '<span>Estado</span>' +
+      '<strong>' +
+        (active ? "Publicada" : "Oculta") +
+      '</strong>' +
+    '</div>' +
+  '</div>';
+
+
+
 
       previewCard.classList.remove("hidden");
 
