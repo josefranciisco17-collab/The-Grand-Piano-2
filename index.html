@@ -850,6 +850,27 @@ document.addEventListener("gesturechange", e => e.preventDefault());
 document.addEventListener("gestureend", e => e.preventDefault());
 
 
+/* BLOQUEAR DOBLE TOQUE SOLO EN LAS TECLAS */
+let ultimoToqueTecla = 0;
+
+document.querySelectorAll(".key").forEach((tecla) => {
+  tecla.addEventListener(
+    "touchend",
+    function (evento) {
+      const ahora = Date.now();
+
+      if (ahora - ultimoToqueTecla < 350) {
+        evento.preventDefault();
+      }
+
+      ultimoToqueTecla = ahora;
+    },
+    { passive: false }
+  );
+});
+
+
+
 </script>
 
 </body>
