@@ -174,24 +174,26 @@ function showLoginMessage(message, type) {
 /* ABRIR SECCIONES */
 
 adminCards.forEach((card) => {
-  card.addEventListener("click", () => {
+    card.addEventListener("click", () => {
 
-const section = card.dataset.section;
+        const section = card.dataset.section;
 
-if (section === "home") {
-  renderHomeSection();
-  return;
-}
+        if (section === "home") {
+            renderHomeSection();
+            return;
+        }
 
 
 if (section === "players") {
-  return;
+    renderPlayersSection();
+    return;
 }
 
-    if (section === "settings") {
-      renderSettingsSection();
-      return;
-    }
+        if (section === "settings") {
+            renderSettingsSection();
+            return;
+        }
+
 
     const sectionName =
       sectionNames[section] || "Sección";

@@ -763,3 +763,6 @@ function closeCoinsModal() {
     .getElementById("coinsAdminModal")
     ?.remove();
 }
+
+window.renderPlayersSection = renderPlayersSection;
+
