@@ -1,4 +1,8 @@
-import { db } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
+
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   collection,
@@ -113,7 +117,32 @@ function renderPlayersSection() {
     filterPlayers(searchInput.value);
   });
 
-  loadPlayersFromFirestore();
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+        const playersList = document.getElementById("playersList");
+        const countText = document.getElementById("playersCountText");
+
+        if (countText) {
+            countText.textContent = "Sesión no iniciada";
+        }
+
+        if (playersList) {
+            playersList.innerHTML = `
+            <div class="players-empty-state">
+                <span>🔐</span>
+                <h3>Debes iniciar sesión</h3>
+                <p>Inicia sesión antes de usar el módulo Jugadores.</p>
+            </div>`;
+        }
+
+        return;
+    }
+
+    loadPlayersFromFirestore();
+
+});
 
   contentSection.scrollIntoView({
     behavior: "smooth",
