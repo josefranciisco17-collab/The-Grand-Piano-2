@@ -7,6 +7,12 @@
   const LIST_MIDIS_URL =
     "https://us-central1-piano-deluxe-premium.cloudfunctions.net/listMidis";
 
+  const UPDATE_MIDI_URL =
+    "https://us-central1-piano-deluxe-premium.cloudfunctions.net/updateMidi";
+
+  const DELETE_MIDI_URL =
+    "https://us-central1-piano-deluxe-premium.cloudfunctions.net/deleteMidi";
+
   let loadedMidis = [];
 
   const midiButton = document.querySelector(
@@ -222,6 +228,65 @@
 
         '</div>' +
 
+        '<div id="midiEditPanel" class="midi-upload-panel hidden">' +
+          '<div class="midi-panel-heading">' +
+            '<div>' +
+              '<p class="section-label">Editar archivo</p>' +
+              '<h3>Información de la canción</h3>' +
+            '</div>' +
+            '<button id="closeMidiEditButton" ' +
+              'class="icon-close-button" type="button" ' +
+              'aria-label="Cerrar edición">✕</button>' +
+          '</div>' +
+
+          '<form id="midiEditForm" class="midi-form">' +
+            '<input id="editMidiFileName" type="hidden">' +
+
+            '<label for="editMidiSongName">Nombre de la canción</label>' +
+            '<input id="editMidiSongName" type="text" maxlength="100" required>' +
+
+            '<label for="editMidiArtist">Artista</label>' +
+            '<input id="editMidiArtist" type="text" maxlength="100" required>' +
+
+            '<label for="editMidiDifficulty">Dificultad</label>' +
+            '<select id="editMidiDifficulty" required>' +
+              '<option value="Fácil">Fácil</option>' +
+              '<option value="Media">Media</option>' +
+              '<option value="Difícil">Difícil</option>' +
+              '<option value="Experto">Experto</option>' +
+            '</select>' +
+
+            '<label for="editMidiCategory">Categoría</label>' +
+            '<select id="editMidiCategory" required>' +
+              '<option value="Clásica">Clásica</option>' +
+              '<option value="Pop">Pop</option>' +
+              '<option value="K-Drama">K-Drama</option>' +
+              '<option value="Películas">Películas</option>' +
+              '<option value="Videojuegos">Videojuegos</option>' +
+              '<option value="Anime">Anime</option>' +
+              '<option value="Otra">Otra</option>' +
+            '</select>' +
+
+            '<label for="editMidiPrice">Precio en monedas</label>' +
+            '<input id="editMidiPrice" type="number" min="0" ' +
+              'max="1000000" step="1" required>' +
+
+            '<label class="midi-checkbox-row">' +
+              '<input id="editMidiActive" type="checkbox">' +
+              '<span>Publicar la canción</span>' +
+            '</label>' +
+
+            '<div class="midi-form-actions">' +
+              '<button id="cancelMidiEditButton" ' +
+                'class="secondary-button" type="button">Cancelar</button>' +
+              '<button id="saveMidiEditButton" ' +
+                'class="primary-button" type="submit">Guardar cambios</button>' +
+            '</div>' +
+
+            '<p id="midiEditMessage" class="form-message"></p>' +
+          '</form>' +
+        '</div>' +
+
         '<div class="midi-list-header">' +
           '<div>' +
             '<h3>Archivos disponibles</h3>' +
@@ -298,6 +363,9 @@
 
       renderMidiFiles(filteredMidis);
     });
+
+    configureMidiActions();
+    configureMidiEditForm();
 
     openButton.addEventListener("click", function () {
       uploadPanel.classList.remove("hidden");
@@ -752,25 +820,52 @@ previewCard.innerHTML =
     }
 
     midiList.innerHTML = files.map(function (midi) {
+      const displayName =
+        midi.songName || midi.name.replace(/\.(mid|midi)$/i, "");
+
+      const details = [
+        midi.artist || "Sin artista",
+        midi.difficulty || "Sin dificultad",
+        midi.category || "Sin categoría",
+        Number(midi.price || 0) + " monedas"
+      ].join(" · ");
+
       return (
         '<article class="midi-item-card">' +
           '<div class="midi-item-top">' +
             '<div class="midi-item-icon">🎹</div>' +
             '<div class="midi-item-information">' +
-              '<h4>' + escapeHtml(midi.name) + '</h4>' +
-              '<p>' +
+              '<h4>' + escapeHtml(displayName) + '</h4>' +
+              '<p>' + escapeHtml(details) + '</p>' +
+              '<small>' +
+                escapeHtml(midi.name) + ' · ' +
                 formatFileSize(Number(midi.size || 0)) +
-                ' · Disponible en GitHub' +
-              '</p>' +
+              '</small>' +
             '</div>' +
-            '<span class="midi-item-status">Disponible</span>' +
+            '<span class="midi-item-status">' +
+              (midi.active ? "Publicada" : "Oculta") +
+            '</span>' +
           '</div>' +
+
           '<div class="midi-item-actions">' +
+            '<button class="midi-action-button midi-edit-button" ' +
+              'type="button" data-midi-name="' +
+              escapeHtml(midi.name) + '">' +
+              'Editar' +
+            '</button>' +
+
+            '<button class="midi-action-button midi-delete-button" ' +
+              'type="button" data-midi-name="' +
+              escapeHtml(midi.name) + '">' +
+              'Eliminar' +
+            '</button>' +
+
             '<a class="midi-action-button" ' +
               'href="' + escapeHtml(midi.downloadUrl) + '" ' +
               'target="_blank" rel="noopener noreferrer" download>' +
               'Descargar' +
             '</a>' +
+
             '<a class="midi-action-button" ' +
               'href="' + escapeHtml(midi.githubUrl) + '" ' +
               'target="_blank" rel="noopener noreferrer">' +
@@ -780,6 +875,231 @@ previewCard.innerHTML =
         '</article>'
       );
     }).join("");
+  }
+
+  function configureMidiActions() {
+    const midiList = document.getElementById("midiList");
+
+    if (!midiList || midiList.dataset.actionsReady === "true") {
+      return;
+    }
+
+    midiList.dataset.actionsReady = "true";
+
+    midiList.addEventListener("click", async function (event) {
+      const editButton = event.target.closest(".midi-edit-button");
+      const deleteButton = event.target.closest(".midi-delete-button");
+
+      if (editButton) {
+        const midi = findMidiByName(editButton.dataset.midiName);
+
+        if (midi) {
+          openMidiEditForm(midi);
+        }
+
+        return;
+      }
+
+      if (deleteButton) {
+        const midi = findMidiByName(deleteButton.dataset.midiName);
+
+        if (midi) {
+          await deleteMidiFile(midi, deleteButton);
+        }
+      }
+    });
+  }
+
+  function findMidiByName(fileName) {
+    return loadedMidis.find(function (midi) {
+      return midi.name === fileName;
+    });
+  }
+
+  function configureMidiEditForm() {
+    const editForm = document.getElementById("midiEditForm");
+    const closeButton = document.getElementById("closeMidiEditButton");
+    const cancelButton = document.getElementById("cancelMidiEditButton");
+
+    if (!editForm || editForm.dataset.ready === "true") {
+      return;
+    }
+
+    editForm.dataset.ready = "true";
+
+    closeButton.addEventListener("click", closeMidiEditForm);
+    cancelButton.addEventListener("click", closeMidiEditForm);
+
+    editForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const saveButton = document.getElementById("saveMidiEditButton");
+      const message = document.getElementById("midiEditMessage");
+
+      const payload = {
+        fileName: document.getElementById("editMidiFileName").value,
+        songName: document.getElementById("editMidiSongName").value.trim(),
+        artist: document.getElementById("editMidiArtist").value.trim(),
+        difficulty: document.getElementById("editMidiDifficulty").value,
+        category: document.getElementById("editMidiCategory").value,
+        price: Number(document.getElementById("editMidiPrice").value),
+        active: document.getElementById("editMidiActive").checked
+      };
+
+      if (
+        !payload.songName ||
+        !payload.artist ||
+        !payload.difficulty ||
+        !payload.category ||
+        !Number.isInteger(payload.price) ||
+        payload.price < 0
+      ) {
+        showMessage(
+          message,
+          "Completa correctamente todos los campos.",
+          "error"
+        );
+        return;
+      }
+
+      saveButton.disabled = true;
+      saveButton.textContent = "Guardando...";
+
+      try {
+        const response = await fetch(UPDATE_MIDI_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(
+            result.message ||
+            "No fue posible actualizar la información."
+          );
+        }
+
+        showMessage(
+          message,
+          result.message ||
+          "Información actualizada correctamente.",
+          "success"
+        );
+
+        await loadMidiLibrary();
+
+        setTimeout(function () {
+          closeMidiEditForm();
+        }, 900);
+      } catch (error) {
+        console.error("Error al editar MIDI:", error);
+
+        showMessage(
+          message,
+          error.message || "Ocurrió un error al editar el MIDI.",
+          "error"
+        );
+      } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = "Guardar cambios";
+      }
+    });
+  }
+
+  function openMidiEditForm(midi) {
+    const panel = document.getElementById("midiEditPanel");
+    const message = document.getElementById("midiEditMessage");
+
+    document.getElementById("editMidiFileName").value = midi.name;
+    document.getElementById("editMidiSongName").value =
+      midi.songName || midi.name.replace(/\.(mid|midi)$/i, "");
+    document.getElementById("editMidiArtist").value = midi.artist || "";
+    document.getElementById("editMidiDifficulty").value =
+      midi.difficulty || "Media";
+    document.getElementById("editMidiCategory").value =
+      midi.category || "Otra";
+    document.getElementById("editMidiPrice").value =
+      Number(midi.price || 0);
+    document.getElementById("editMidiActive").checked =
+      Boolean(midi.active);
+
+    clearMessage(message);
+    panel.classList.remove("hidden");
+
+    panel.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  function closeMidiEditForm() {
+    const panel = document.getElementById("midiEditPanel");
+    const form = document.getElementById("midiEditForm");
+    const message = document.getElementById("midiEditMessage");
+
+    if (panel) {
+      panel.classList.add("hidden");
+    }
+
+    if (form) {
+      form.reset();
+    }
+
+    if (message) {
+      clearMessage(message);
+    }
+  }
+
+  async function deleteMidiFile(midi, button) {
+    const confirmed = window.confirm(
+      '¿Eliminar definitivamente "' +
+      (midi.songName || midi.name) +
+      '" de GitHub?'
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = "Eliminando...";
+
+    try {
+      const response = await fetch(DELETE_MIDI_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fileName: midi.name
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.message ||
+          "No fue posible eliminar el archivo MIDI."
+        );
+      }
+
+      await loadMidiLibrary();
+      window.alert("MIDI eliminado correctamente.");
+    } catch (error) {
+      console.error("Error al eliminar MIDI:", error);
+      window.alert(
+        error.message || "Ocurrió un error al eliminar el MIDI."
+      );
+
+      button.disabled = false;
+      button.textContent = originalText;
+    }
   }
 
   function resetFileInformation() {
