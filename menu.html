@@ -447,22 +447,10 @@ document.getElementById("shopBtn").addEventListener("click", () => {
 });
 
 
-
 window.openAdmin = function(){
-
-const defaultPass = "Flor 7272";
-const savedPass =
-localStorage.getItem("adminPassword") || defaultPass;
-
-const pass = prompt("Ingrese contraseña Admin:");
-
-if(pass === savedPass){
-location.href = "admin.html";
-}else{
-alert("Contraseña incorrecta");
-}
-
+  window.location.href = "admin.html";
 };
+
 </script>
 
 </body>
