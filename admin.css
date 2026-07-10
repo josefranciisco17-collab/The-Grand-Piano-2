@@ -876,3 +876,223 @@ textarea:focus {
 .back-menu-button:active{
     transform:scale(.98);
 }
+
+
+/* DASHBOARD DE INICIO */
+
+.dashboard-stats{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+    margin-top:22px;
+}
+
+.dashboard-stat-card{
+    min-height:120px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    border-radius:24px;
+    background:rgba(10,10,10,.88);
+    border:1px solid rgba(212,175,55,.28);
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.35),
+        0 0 24px rgba(212,175,55,.07);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+}
+
+.dashboard-stat-icon{
+    width:58px;
+    height:58px;
+    flex:0 0 58px;
+    display:grid;
+    place-items:center;
+    border-radius:18px;
+    font-size:30px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.dashboard-stat-card div{
+    min-width:0;
+}
+
+.dashboard-stat-card small{
+    display:block;
+    margin-bottom:6px;
+    color:#a9a9a9;
+    font-size:14px;
+    line-height:1.35;
+}
+
+.dashboard-stat-card strong{
+    display:block;
+    color:#ffffff;
+    font-size:30px;
+    line-height:1;
+    overflow-wrap:anywhere;
+}
+
+.dashboard-panel{
+    margin-top:22px;
+    padding:22px;
+    border-radius:26px;
+    background:rgba(10,10,10,.9);
+    border:1px solid rgba(212,175,55,.28);
+    box-shadow:
+        0 12px 34px rgba(0,0,0,.38),
+        0 0 25px rgba(212,175,55,.06);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+}
+
+.dashboard-panel-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:18px;
+}
+
+.dashboard-panel-title > span{
+    width:48px;
+    height:48px;
+    flex:0 0 48px;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    background:rgba(255,255,255,.06);
+    font-size:24px;
+}
+
+.dashboard-panel-title h3{
+    margin:0;
+    color:#ffffff;
+    font-size:22px;
+}
+
+.dashboard-panel-title p{
+    margin:4px 0 0;
+    color:#969696;
+    font-size:14px;
+}
+
+.system-status-list{
+    display:grid;
+    gap:12px;
+}
+
+.system-status-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:15px 16px;
+    border-radius:18px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.system-status-item span{
+    color:#e5e5e5;
+    font-weight:700;
+}
+
+.status-online{
+    color:#72e69a;
+    font-size:14px;
+}
+
+.quick-actions-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+}
+
+.quick-actions-grid button{
+    min-height:76px;
+    padding:16px;
+    border-radius:20px;
+    background:#252525;
+    color:#ffffff;
+    border:1px solid rgba(255,255,255,.06);
+    font-size:15px;
+    font-weight:700;
+    text-align:center;
+    cursor:pointer;
+    transition:transform .2s ease, background .2s ease;
+}
+
+.quick-actions-grid button:active{
+    transform:scale(.98);
+    background:#333333;
+}
+
+.activity-list{
+    display:grid;
+    gap:12px;
+}
+
+.activity-item{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    padding:15px 16px;
+    border-radius:18px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.activity-item > span{
+    font-size:22px;
+    line-height:1;
+}
+
+.activity-item strong{
+    display:block;
+    color:#ffffff;
+    margin-bottom:5px;
+    font-size:15px;
+}
+
+.activity-item small{
+    display:block;
+    color:#999999;
+    line-height:1.45;
+}
+
+.dashboard-alerts{
+    border-color:rgba(255,193,7,.28);
+}
+
+.dashboard-empty-alert{
+    padding:18px;
+    border-radius:18px;
+    text-align:center;
+    color:#b7b7b7;
+    background:rgba(255,193,7,.05);
+    border:1px solid rgba(255,193,7,.12);
+}
+
+@media (max-width:580px){
+    .dashboard-stats{
+        grid-template-columns:1fr;
+    }
+
+    .quick-actions-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-stat-card{
+        min-height:104px;
+    }
+
+    .dashboard-stat-card strong{
+        font-size:26px;
+    }
+
+    .dashboard-panel{
+        padding:18px;
+    }
+}

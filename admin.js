@@ -177,6 +177,11 @@ adminCards.forEach((card) => {
   card.addEventListener("click", () => {
     const section = card.dataset.section;
 
+if (section === "home") {
+  renderHomeSection();
+  return;
+}
+
     if (section === "settings") {
       renderSettingsSection();
       return;
@@ -184,6 +189,7 @@ adminCards.forEach((card) => {
 
     const sectionName =
       sectionNames[section] || "Sección";
+
 
     contentSection.innerHTML = `
       <div class="empty-state">
@@ -201,6 +207,201 @@ adminCards.forEach((card) => {
     scrollToContent();
   });
 });
+
+
+/* DASHBOARD DE INICIO */
+
+function renderHomeSection() {
+  contentSection.innerHTML = `
+    <div class="section-header">
+      <p class="section-label">Panel principal</p>
+      <h2>Resumen general</h2>
+      <p>
+        Consulta rápidamente el estado y la actividad de
+        The Grand Piano.
+      </p>
+    </div>
+
+    <section class="dashboard-stats">
+      <article class="dashboard-stat-card">
+        <span class="dashboard-stat-icon">👥</span>
+        <div>
+          <small>Jugadores registrados</small>
+          <strong id="dashboardPlayers">0</strong>
+        </div>
+      </article>
+
+      <article class="dashboard-stat-card">
+        <span class="dashboard-stat-icon">🟢</span>
+        <div>
+          <small>Jugadores en línea</small>
+          <strong id="dashboardOnline">0</strong>
+        </div>
+      </article>
+
+      <article class="dashboard-stat-card">
+        <span class="dashboard-stat-icon">🎵</span>
+        <div>
+          <small>Canciones</small>
+          <strong id="dashboardSongs">0</strong>
+        </div>
+      </article>
+
+      <article class="dashboard-stat-card">
+        <span class="dashboard-stat-icon">🎹</span>
+        <div>
+          <small>Archivos MIDI</small>
+          <strong id="dashboardMidis">28</strong>
+        </div>
+      </article>
+
+      <article class="dashboard-stat-card">
+        <span class="dashboard-stat-icon">🪙</span>
+        <div>
+          <small>Monedas en circulación</small>
+          <strong id="dashboardCoins">0</strong>
+        </div>
+      </article>
+
+      <article class="dashboard-stat-card">
+        <span class="dashboard-stat-icon">💎</span>
+        <div>
+          <small>Diamantes en circulación</small>
+          <strong id="dashboardDiamonds">0</strong>
+        </div>
+      </article>
+    </section>
+
+    <section class="dashboard-panel">
+      <div class="dashboard-panel-title">
+        <span>🟢</span>
+        <div>
+          <h3>Estado del sistema</h3>
+          <p>Servicios principales de la aplicación</p>
+        </div>
+      </div>
+
+      <div class="system-status-list">
+        <div class="system-status-item">
+          <span>Firebase</span>
+          <strong class="status-online">Operativo</strong>
+        </div>
+
+        <div class="system-status-item">
+          <span>Firestore</span>
+          <strong class="status-online">Operativo</strong>
+        </div>
+
+        <div class="system-status-item">
+          <span>GitHub</span>
+          <strong class="status-online">Conectado</strong>
+        </div>
+
+        <div class="system-status-item">
+          <span>Cloud Functions</span>
+          <strong class="status-online">Activas</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-panel">
+      <div class="dashboard-panel-title">
+        <span>⚡</span>
+        <div>
+          <h3>Acciones rápidas</h3>
+          <p>Accesos directos del administrador</p>
+        </div>
+      </div>
+
+      <div class="quick-actions-grid">
+        <button type="button" data-dashboard-section="songs">
+          🎵 Administrar canciones
+        </button>
+
+        <button type="button" data-dashboard-section="players">
+          👥 Ver jugadores
+        </button>
+
+        <button type="button" data-dashboard-section="economy">
+          💎 Administrar economía
+        </button>
+
+        <button type="button" data-dashboard-section="announcements">
+          📢 Crear anuncio
+        </button>
+      </div>
+    </section>
+
+    <section class="dashboard-panel">
+      <div class="dashboard-panel-title">
+        <span>🔔</span>
+        <div>
+          <h3>Actividad reciente</h3>
+          <p>Últimos movimientos administrativos</p>
+        </div>
+      </div>
+
+      <div class="activity-list">
+        <article class="activity-item">
+          <span>✅</span>
+          <div>
+            <strong>Panel administrativo operativo</strong>
+            <small>El sistema está funcionando correctamente.</small>
+          </div>
+        </article>
+
+        <article class="activity-item">
+          <span>🎹</span>
+          <div>
+            <strong>Biblioteca MIDI disponible</strong>
+            <small>Los archivos están conectados con GitHub.</small>
+          </div>
+        </article>
+
+        <article class="activity-item">
+          <span>🔐</span>
+          <div>
+            <strong>Acceso administrativo protegido</strong>
+            <small>La sesión del administrador está activa.</small>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="dashboard-panel dashboard-alerts">
+      <div class="dashboard-panel-title">
+        <span>⚠️</span>
+        <div>
+          <h3>Alertas</h3>
+          <p>Asuntos que requieren atención</p>
+        </div>
+      </div>
+
+      <div class="dashboard-empty-alert">
+        No existen alertas pendientes.
+      </div>
+    </section>
+  `;
+
+  document
+    .querySelectorAll("[data-dashboard-section]")
+    .forEach(function (button) {
+      button.addEventListener("click", function () {
+        const section = button.dataset.dashboardSection;
+
+        const targetCard = document.querySelector(
+          '.admin-card[data-section="' + section + '"]'
+        );
+
+        if (targetCard) {
+          targetCard.click();
+        }
+      });
+    });
+
+  scrollToContent();
+}
+
 
 
 /* CONFIGURACIÓN Y SEGURIDAD */
