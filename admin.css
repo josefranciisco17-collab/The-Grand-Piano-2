@@ -1096,3 +1096,233 @@ textarea:focus {
         padding:18px;
     }
 }
+
+
+/* ===========================
+   JUGADORES
+=========================== */
+
+.players-summary-grid{
+display:grid;
+grid-template-columns:1fr;
+gap:16px;
+margin-top:28px;
+}
+
+.players-summary-card{
+display:flex;
+align-items:center;
+gap:18px;
+padding:20px;
+background:rgba(15,15,15,.92);
+border:1px solid rgba(212,175,55,.20);
+border-radius:22px;
+box-shadow:0 0 22px rgba(212,175,55,.08);
+}
+
+.players-summary-card span{
+font-size:34px;
+}
+
+.players-summary-card small{
+display:block;
+color:#9b9b9b;
+font-size:14px;
+margin-bottom:6px;
+}
+
+.players-summary-card strong{
+font-size:34px;
+color:#fff;
+}
+
+.players-panel{
+margin-top:30px;
+padding:26px;
+background:rgba(15,15,15,.92);
+border:1px solid rgba(212,175,55,.20);
+border-radius:26px;
+box-shadow:0 0 22px rgba(212,175,55,.08);
+}
+
+.players-panel-title{
+display:flex;
+align-items:flex-start;
+gap:18px;
+margin-bottom:22px;
+}
+
+.players-panel-title span{
+font-size:34px;
+}
+
+.players-panel-title h3{
+margin:0;
+font-size:34px;
+color:#fff;
+}
+
+.players-panel-title p{
+margin-top:6px;
+color:#9c9c9c;
+}
+
+.players-search-input{
+width:100%;
+padding:18px 20px;
+background:#1d1d1d;
+border:1px solid #333;
+border-radius:18px;
+color:#fff;
+font-size:17px;
+outline:none;
+}
+
+.players-search-input:focus{
+border-color:#d4af37;
+box-shadow:0 0 12px rgba(212,175,55,.25);
+}
+
+.players-list{
+display:flex;
+flex-direction:column;
+gap:22px;
+margin-top:20px;
+}
+
+.player-card{
+padding:22px;
+background:#171717;
+border:1px solid rgba(212,175,55,.15);
+border-radius:24px;
+}
+
+.player-card-header{
+display:flex;
+gap:18px;
+align-items:flex-start;
+}
+
+.player-avatar{
+width:72px;
+height:72px;
+border-radius:50%;
+background:#262626;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:34px;
+overflow:hidden;
+flex-shrink:0;
+}
+
+.player-avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.player-main-info{
+flex:1;
+}
+
+.player-main-info h4{
+margin:0;
+font-size:22px;
+color:#fff;
+}
+
+.player-main-info p{
+margin:6px 0;
+color:#cfcfcf;
+}
+
+.player-main-info small{
+color:#8f8f8f;
+}
+
+.player-status-active,
+.player-status-suspended{
+padding:8px 16px;
+border-radius:999px;
+font-size:14px;
+font-weight:700;
+}
+
+.player-status-active{
+background:#13361f;
+color:#67ff95;
+}
+
+.player-status-suspended{
+background:#4d1717;
+color:#ff8888;
+}
+
+.player-data-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:16px;
+margin-top:22px;
+}
+
+.player-data-grid div{
+padding:16px;
+background:#202020;
+border-radius:16px;
+}
+
+.player-data-grid small{
+display:block;
+color:#9f9f9f;
+margin-bottom:6px;
+}
+
+.player-data-grid strong{
+color:#fff;
+font-size:18px;
+}
+
+.player-actions{
+display:grid;
+grid-template-columns:1fr;
+gap:14px;
+margin-top:24px;
+}
+
+.player-actions button{
+background:#2a2a2a;
+color:#fff;
+border:1px solid rgba(212,175,55,.20);
+border-radius:18px;
+padding:16px;
+font-size:17px;
+font-weight:700;
+cursor:pointer;
+transition:.25s;
+}
+
+.player-actions button:hover{
+background:#363636;
+}
+
+.players-empty-state{
+text-align:center;
+padding:50px 20px;
+}
+
+.players-empty-state span{
+font-size:60px;
+display:block;
+margin-bottom:14px;
+}
+
+.players-empty-state h3{
+margin:0 0 10px;
+color:#fff;
+}
+
+.players-empty-state p{
+color:#9d9d9d;
+line-height:1.6;
+}
