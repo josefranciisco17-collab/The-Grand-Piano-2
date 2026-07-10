@@ -666,79 +666,27 @@ Saldo disponible
   </div>
 </div>
 
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyArKUqthHRdO1xXn39wJP-JCiBZdi1OcY",
-  authDomain: "piano-deluxe-premium.firebaseapp.com",
-  projectId: "piano-deluxe-premium",
-  storageBucket: "piano-deluxe-premium.firebasestorage.app",
-  messagingSenderId: "79307845171",
-  appId: "1:79307845171:web:c21918694f6d916fbbfd46"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-/* Esperar a que Firebase termine de recuperar la sesión */
-await auth.authStateReady();
-
-const currentUser = auth.currentUser;
-
-/* Solo enviar al login cuando realmente no existe sesión */
-if (!currentUser) {
-  window.location.replace("login.html");
-  throw new Error("Usuario no autenticado");
-}
-
+<script>
 let stripeURL = "";
 
-document.querySelectorAll(".stripe-buy").forEach((btn) => {
-  btn.addEventListener("click", (event) => {
-    event.preventDefault();
+document.querySelectorAll(".stripe-buy").forEach(btn=>{
+  btn.addEventListener("click", e=>{
+    e.preventDefault();
 
     stripeURL = btn.href;
-
-    document.getElementById("modalCoins").textContent =
-      btn.dataset.coins + " Monedas";
-
-    document.getElementById("modalPrice").textContent =
-      btn.dataset.price;
-
+    document.getElementById("modalCoins").textContent = btn.dataset.coins + " Monedas";
+    document.getElementById("modalPrice").textContent = btn.dataset.price;
     document.getElementById("buyModal").classList.add("show");
   });
 });
 
-document.getElementById("cancelBuy").addEventListener("click", () => {
+document.getElementById("cancelBuy").onclick = ()=>{
   document.getElementById("buyModal").classList.remove("show");
-  stripeURL = "";
-});
+};
 
-document.getElementById("continueBuy").addEventListener("click", () => {
-  if (!stripeURL) {
-    alert("Selecciona un paquete de monedas.");
-    return;
-  }
-
-  const separator = stripeURL.includes("?") ? "&" : "?";
-
-  const finalURL =
-    stripeURL +
-    separator +
-    "client_reference_id=" +
-    encodeURIComponent(currentUser.uid);
-
-  window.location.href = finalURL;
-});
-
-</script>
-
+document.getElementById("continueBuy").onclick = ()=>{
+  window.open(stripeURL, "_blank");
+};
 </script>
 
 </body>
