@@ -4,6 +4,11 @@
   const UPLOAD_MIDI_URL =
     "https://us-central1-piano-deluxe-premium.cloudfunctions.net/uploadMidi";
 
+  const LIST_MIDIS_URL =
+    "https://us-central1-piano-deluxe-premium.cloudfunctions.net/listMidis";
+
+  let loadedMidis = [];
+
   const midiButton = document.querySelector(
     '.admin-card[data-section="midis"]'
   );
@@ -240,6 +245,7 @@
       '</div>';
 
     configureMidiInterface();
+    loadMidiLibrary();
 
     contentSection.scrollIntoView({
       behavior: "smooth",
@@ -278,7 +284,20 @@
     const submitButton =
       document.getElementById("submitMidiButton");
 
+    const searchInput =
+      document.getElementById("midiSearchInput");
+
     let readyToUpload = false;
+
+    searchInput.addEventListener("input", function () {
+      const query = searchInput.value.trim().toLowerCase();
+
+      const filteredMidis = loadedMidis.filter(function (midi) {
+        return midi.name.toLowerCase().includes(query);
+      });
+
+      renderMidiFiles(filteredMidis);
+    });
 
     openButton.addEventListener("click", function () {
       uploadPanel.classList.remove("hidden");
@@ -556,7 +575,7 @@ previewCard.innerHTML =
         );
 
         submitButton.textContent = "MIDI subido correctamente";
-        addUploadedMidiToList(result.file, file.size);
+        await loadMidiLibrary();
 
         uploadForm.reset();
         resetFileInformation();
@@ -627,59 +646,140 @@ previewCard.innerHTML =
     });
   }
 
-  function addUploadedMidiToList(fileData, originalSize) {
+  async function loadMidiLibrary() {
     const midiList = document.getElementById("midiList");
     const countText = document.getElementById("midiCountText");
 
-    if (!midiList || !fileData) {
+    if (!midiList || !countText) {
       return;
     }
 
-    const emptyState =
-      midiList.querySelector(".midi-empty-state");
-
-    if (emptyState) {
-      emptyState.remove();
-    }
-
-    const card = document.createElement("article");
-    card.className = "midi-item-card";
-
-    card.innerHTML =
-      '<div class="midi-item-top">' +
-        '<div class="midi-item-icon">🎹</div>' +
-        '<div class="midi-item-information">' +
-          '<h4>' + escapeHtml(fileData.songName || fileData.name) + '</h4>' +
-          '<p>' +
-            escapeHtml(fileData.artist || "Sin artista") +
-            ' · ' +
-            formatFileSize(originalSize || 0) +
-          '</p>' +
-        '</div>' +
-        '<span class="midi-item-status">' +
-          (fileData.active ? "Publicada" : "Oculta") +
-        '</span>' +
-      '</div>' +
-      '<div class="midi-item-actions">' +
-        '<a class="midi-action-button" ' +
-          'href="' + escapeHtml(fileData.url || "#") + '" ' +
-          'target="_blank" rel="noopener noreferrer">' +
-          'Ver en GitHub' +
-        '</a>' +
+    midiList.innerHTML =
+      '<div class="midi-empty-state">' +
+        '<span>⏳</span>' +
+        '<h3>Cargando biblioteca</h3>' +
+        '<p>Consultando la carpeta <strong>midis</strong> de GitHub.</p>' +
       '</div>';
 
-    midiList.prepend(card);
+    try {
+      const response = await fetch(LIST_MIDIS_URL, {
+        method: "GET",
+        cache: "no-store"
+      });
 
-    const currentCount =
-      midiList.querySelectorAll(".midi-item-card").length;
+      let result = {};
 
-    if (countText) {
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        throw new Error(
+          "La función de biblioteca no devolvió información válida."
+        );
+      }
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.message ||
+          "No fue posible cargar la Biblioteca MIDI."
+        );
+      }
+
+      loadedMidis = Array.isArray(result.files)
+        ? result.files
+        : [];
+
       countText.textContent =
-        currentCount +
-        (currentCount === 1
+        loadedMidis.length +
+        (loadedMidis.length === 1
           ? " archivo MIDI"
           : " archivos MIDI");
+
+      const searchInput =
+        document.getElementById("midiSearchInput");
+
+      const query = searchInput
+        ? searchInput.value.trim().toLowerCase()
+        : "";
+
+      const visibleMidis = query
+        ? loadedMidis.filter(function (midi) {
+            return midi.name.toLowerCase().includes(query);
+          })
+        : loadedMidis;
+
+      renderMidiFiles(visibleMidis);
+    } catch (error) {
+      console.error("Error al cargar los MIDI:", error);
+
+      loadedMidis = [];
+      countText.textContent = "No se pudo cargar";
+
+      midiList.innerHTML =
+        '<div class="midi-empty-state">' +
+          '<span>⚠️</span>' +
+          '<h3>No se pudo cargar la biblioteca</h3>' +
+          '<p>' + escapeHtml(error.message) + '</p>' +
+          '<button id="retryMidiListButton" ' +
+            'class="secondary-button" type="button">' +
+            'Intentar nuevamente' +
+          '</button>' +
+        '</div>';
+
+      const retryButton =
+        document.getElementById("retryMidiListButton");
+
+      if (retryButton) {
+        retryButton.addEventListener("click", loadMidiLibrary);
+      }
     }
+  }
+
+  function renderMidiFiles(files) {
+    const midiList = document.getElementById("midiList");
+
+    if (!midiList) {
+      return;
+    }
+
+    if (!files.length) {
+      midiList.innerHTML =
+        '<div class="midi-empty-state">' +
+          '<span>🎼</span>' +
+          '<h3>Sin archivos MIDI</h3>' +
+          '<p>No hay resultados disponibles para mostrar.</p>' +
+        '</div>';
+      return;
+    }
+
+    midiList.innerHTML = files.map(function (midi) {
+      return (
+        '<article class="midi-item-card">' +
+          '<div class="midi-item-top">' +
+            '<div class="midi-item-icon">🎹</div>' +
+            '<div class="midi-item-information">' +
+              '<h4>' + escapeHtml(midi.name) + '</h4>' +
+              '<p>' +
+                formatFileSize(Number(midi.size || 0)) +
+                ' · Disponible en GitHub' +
+              '</p>' +
+            '</div>' +
+            '<span class="midi-item-status">Disponible</span>' +
+          '</div>' +
+          '<div class="midi-item-actions">' +
+            '<a class="midi-action-button" ' +
+              'href="' + escapeHtml(midi.downloadUrl) + '" ' +
+              'target="_blank" rel="noopener noreferrer" download>' +
+              'Descargar' +
+            '</a>' +
+            '<a class="midi-action-button" ' +
+              'href="' + escapeHtml(midi.githubUrl) + '" ' +
+              'target="_blank" rel="noopener noreferrer">' +
+              'Ver en GitHub' +
+            '</a>' +
+          '</div>' +
+        '</article>'
+      );
+    }).join("");
   }
 
   function resetFileInformation() {
