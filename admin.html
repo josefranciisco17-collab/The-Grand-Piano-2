@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <title>Panel Admin | The Grand Piano</title>
+
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <!-- ACCESO ADMINISTRATIVO -->
+  <section id="adminLogin" class="admin-login">
+
+    <div class="login-card">
+
+      <div class="login-icon">👑</div>
+
+      <p class="login-label">The Grand Piano</p>
+
+      <h1>Panel Admin</h1>
+
+      <p class="login-description">
+        Ingresa la contraseña administrativa para continuar.
+      </p>
+
+      <form id="adminLoginForm">
+
+        <div class="password-field">
+
+          <input
+            id="adminPasswordInput"
+            type="password"
+            placeholder="Contraseña administrativa"
+            autocomplete="current-password"
+            required
+          >
+
+          <button
+            id="toggleLoginPassword"
+            class="show-password-button"
+            type="button"
+            aria-label="Mostrar contraseña"
+          >
+            👁️
+          </button>
+
+        </div>
+
+        <button class="primary-button" type="submit">
+          Entrar al panel
+        </button>
+
+      </form>
+
+      <p id="loginMessage" class="form-message"></p>
+
+    </div>
+
+  </section>
+
+
+  <!-- PANEL ADMIN -->
+  <main id="adminApp" class="admin-app hidden">
+
+    <header class="admin-header">
+
+      <div>
+        <p class="admin-subtitle">The Grand Piano</p>
+        <h1>Panel Admin</h1>
+      </div>
+
+      <button
+        id="logoutButton"
+        class="logout-button"
+        type="button"
+      >
+        Cerrar sesión
+      </button>
+
+    </header>
+
+
+    <section class="welcome-card">
+
+      <p class="welcome-label">Administración</p>
+
+      <h2>Bienvenido al nuevo panel</h2>
+
+      <p>
+        Desde aquí administraremos canciones, archivos MIDI,
+        jugadores, economía, anuncios y configuración.
+      </p>
+
+    </section>
+
+
+    <section class="admin-grid">
+
+      <button
+        class="admin-card"
+        type="button"
+        data-section="home"
+      >
+        <span class="admin-card-icon">🏠</span>
+
+        <span class="admin-card-content">
+          <strong>Inicio</strong>
+          <small>Resumen general del sistema</small>
+        </span>
+      </button>
+
+
+      <button
+        class="admin-card"
+        type="button"
+        data-section="songs"
+      >
+        <span class="admin-card-icon">🎵</span>
+
+        <span class="admin-card-content">
+          <strong>Canciones</strong>
+          <small>Agregar, editar y eliminar canciones</small>
+        </span>
+      </button>
+
+
+      <button
+        class="admin-card"
+        type="button"
+        data-section="midis"
+      >
+        <span class="admin-card-icon">🎹</span>
+
+        <span class="admin-card-content">
+          <strong>Biblioteca MIDI</strong>
+          <small>Subir archivos directamente a GitHub</small>
+        </span>
+      </button>
+
+
+      <button
+        class="admin-card"
+        type="button"
+        data-section="players"
+      >
+        <span class="admin-card-icon">👤</span>
+
+        <span class="admin-card-content">
+          <strong>Jugadores</strong>
+          <small>Administrar cuentas y progreso</small>
+        </span>
+      </button>
+
+
+      <button
+        class="admin-card"
+        type="button"
+        data-section="economy"
+      >
+        <span class="admin-card-icon">💎</span>
+
+        <span class="admin-card-content">
+          <strong>Economía</strong>
+          <small>Monedas, diamantes y recompensas</small>
+        </span>
+      </button>
+
+
+      <button
+        class="admin-card"
+        type="button"
+        data-section="announcements"
+      >
+        <span class="admin-card-icon">📢</span>
+
+        <span class="admin-card-content">
+          <strong>Anuncios</strong>
+          <small>Enviar novedades a los jugadores</small>
+        </span>
+      </button>
+
+
+      <button
+        class="admin-card"
+        type="button"
+        data-section="reports"
+      >
+        <span class="admin-card-icon">🛟</span>
+
+        <span class="admin-card-content">
+          <strong>Reportes</strong>
+          <small>Revisar problemas enviados por jugadores</small>
+        </span>
+      </button>
+
+
+      <button
+        class="admin-card"
+        type="button"
+        data-section="settings"
+      >
+        <span class="admin-card-icon">⚙️</span>
+
+        <span class="admin-card-content">
+          <strong>Configuración</strong>
+          <small>Seguridad y ajustes generales</small>
+        </span>
+      </button>
+
+    </section>
+
+
+    <section id="contentSection" class="content-section">
+
+      <div class="empty-state">
+
+        <span>👑</span>
+
+        <h2>Panel preparado</h2>
+
+        <p>
+          Selecciona una sección para comenzar.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="admin.js"></script>
+
+</body>
+</html>
