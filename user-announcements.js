@@ -50,11 +50,8 @@ closeButton.addEventListener("click", () => {
 
 }
 
-function   data.title,
-  data.message
-);
 
-showAnnouncement(title, message, announcementId) {
+function showAnnouncement(title, message, announcementId) {
   createAnnouncementWindow();
 
 
