@@ -128,6 +128,50 @@ text-shadow:0 0 15px rgba(212,175,55,.25);
 }
 
 
+.wallet-balance.balance-change{
+animation:balancePulse .75s ease;
+}
+
+@keyframes balancePulse{
+0%{
+transform:scale(1);
+text-shadow:0 0 15px rgba(212,175,55,.25);
+}
+
+45%{
+transform:scale(1.16);
+text-shadow:
+0 0 18px rgba(212,175,55,.85),
+0 0 35px rgba(212,175,55,.55);
+}
+
+100%{
+transform:scale(1);
+text-shadow:0 0 15px rgba(212,175,55,.25);
+}
+}
+
+.coin-change-message{
+min-height:24px;
+margin-top:8px;
+font-size:16px;
+font-weight:bold;
+opacity:0;
+transition:opacity .3s ease;
+}
+
+.coin-change-message.show{
+opacity:1;
+}
+
+.coin-change-message.positive{
+color:#63e68a;
+}
+
+.coin-change-message.negative{
+color:#ff7676;
+}
+
 </style>
 
 </head>
@@ -153,11 +197,12 @@ text-shadow:0 0 15px rgba(212,175,55,.25);
 💳 Tu saldo
 </div>
 
-<div class="wallet-balance" id="coinBalance">
+<div class="wallet-balance" 
+id="coinBalance">
 0 Monedas
 </div>
 
-</div>
+<div class="coin-change-message" id="coinChangeMessage"></div>
 
 
 <div class="featured-title">
@@ -224,6 +269,11 @@ import {
 
 const coinBalance = document.getElementById("coinBalance");
 
+const coinChangeMessage = document.getElementById("coinChangeMessage");
+
+let previousCoins = null;
+let messageTimer = null;
+
 coinBalance.textContent = "Cargando...";
 
 
@@ -271,20 +321,70 @@ onAuthStateChanged(auth, async (user) => {
         Cuando Firestore cambie las monedas,
         el contador se actualizará automáticamente.
         */
-        onSnapshot(userRef, (snapshot) => {
+        
+    if (!snapshot.exists()) {
+        coinBalance.textContent = "0 Monedas";
+        return;
+    }
 
-            if (!snapshot.exists()) {
-                coinBalance.textContent = "0 Monedas";
-                return;
-            }
+    const data = snapshot.data();
+    const coins = Number(data.coins) || 0;
 
-            const data = snapshot.data();
-            const coins = Number(data.coins) || 0;
+    coinBalance.textContent =
+        `${coins.toLocaleString("es-MX")} ${coins === 1 ? "Moneda" : "Monedas"}`;
 
-            coinBalance.textContent =
-                `${coins.toLocaleString("es-MX")} ${coins === 1 ? "Moneda" : "Monedas"}`;
+}, (error) => {
 
-        }, (error) => {
+
+
+onSnapshot(userRef, (snapshot) => {
+
+    if (!snapshot.exists()) {
+        coinBalance.textContent = "0 Monedas";
+        previousCoins = 0;
+        return;
+    }
+
+    const data = snapshot.data();
+    const coins = Number(data.coins) || 0;
+
+    coinBalance.textContent =
+        `${coins.toLocaleString("es-MX")} ${coins === 1 ? "Moneda" : "Monedas"}`;
+
+    if (previousCoins !== null && coins !== previousCoins) {
+
+        const difference = coins - previousCoins;
+
+        coinBalance.classList.remove("balance-change");
+        void coinBalance.offsetWidth;
+        coinBalance.classList.add("balance-change");
+
+        clearTimeout(messageTimer);
+
+        coinChangeMessage.className = "coin-change-message show";
+
+        if (difference > 0) {
+            coinChangeMessage.textContent =
+                `+${difference.toLocaleString("es-MX")} monedas recibidas`;
+
+            coinChangeMessage.classList.add("positive");
+        } else {
+            coinChangeMessage.textContent =
+                `${difference.toLocaleString("es-MX")} monedas utilizadas`;
+
+            coinChangeMessage.classList.add("negative");
+        }
+
+        messageTimer = setTimeout(() => {
+            coinChangeMessage.classList.remove("show");
+        }, 3000);
+    }
+
+    previousCoins = coins;
+
+}, (error) => {
+
+
 
             console.error("Error al escuchar el saldo:", error);
             coinBalance.textContent = "Error al cargar";
