@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Banco Admin - The Grand Piano</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Georgia,serif;
+}
+
+body{
+min-height:100vh;
+background:
+linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.95)),
+url("background.png") center/cover no-repeat fixed;
+color:#fff;
+padding:18px;
+}
+
+.container{
+width:100%;
+max-width:760px;
+margin:auto;
+padding:28px;
+border-radius:32px;
+background:rgba(10,10,10,.92);
+border:1px solid rgba(212,175,55,.35);
+box-shadow:
+0 0 40px rgba(212,175,55,.15),
+0 0 20px rgba(255,255,255,.04);
+}
+
+.title{
+text-align:center;
+font-size:40px;
+font-weight:bold;
+color:#d4af37;
+margin-bottom:8px;
+}
+
+.subtitle{
+text-align:center;
+font-size:17px;
+color:#c9c9c9;
+line-height:1.5;
+margin-bottom:30px;
+}
+
+.bank-card{
+padding:24px;
+border-radius:24px;
+background:linear-gradient(
+180deg,
+rgba(35,35,35,.98),
+rgba(14,14,14,.98)
+);
+border:1px solid rgba(212,175,55,.30);
+box-shadow:0 0 22px rgba(212,175,55,.10);
+}
+
+.form-group{
+margin-bottom:20px;
+}
+
+.form-group label{
+display:block;
+font-size:16px;
+font-weight:bold;
+color:#e2e2e2;
+margin-bottom:8px;
+}
+
+.form-group input,
+.form-group textarea{
+width:100%;
+padding:15px;
+border-radius:15px;
+border:1px solid rgba(212,175,55,.35);
+background:#111;
+color:#fff;
+font-size:16px;
+outline:none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+border-color:#d4af37;
+box-shadow:0 0 12px rgba(212,175,55,.20);
+}
+
+.form-group textarea{
+min-height:90px;
+resize:vertical;
+}
+
+.player-result{
+display:none;
+margin:18px 0;
+padding:18px;
+border-radius:18px;
+background:rgba(0,0,0,.35);
+border:1px solid rgba(212,175,55,.25);
+}
+
+.player-result.show{
+display:block;
+}
+
+.player-name{
+font-size:20px;
+font-weight:bold;
+color:#fff;
+}
+
+.player-email,
+.player-uid,
+.player-balance{
+margin-top:7px;
+font-size:14px;
+color:#bdbdbd;
+word-break:break-all;
+}
+
+.player-balance strong{
+color:#d4af37;
+}
+
+.action-btn{
+width:100%;
+padding:17px;
+border:none;
+border-radius:18px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+.search-btn{
+background:linear-gradient(180deg,#333,#1b1b1b);
+color:#fff;
+border:1px solid rgba(212,175,55,.35);
+}
+
+.send-btn{
+background:linear-gradient(180deg,#d4af37,#b8860b);
+color:#111;
+}
+
+.send-btn:disabled{
+opacity:.45;
+cursor:not-allowed;
+}
+
+.status-message{
+display:none;
+margin-top:18px;
+padding:14px;
+border-radius:14px;
+text-align:center;
+font-size:15px;
+font-weight:bold;
+}
+
+.status-message.show{
+display:block;
+}
+
+.status-message.success{
+background:rgba(40,180,90,.15);
+border:1px solid rgba(40,220,100,.35);
+color:#64e68c;
+}
+
+.status-message.error{
+background:rgba(220,50,50,.15);
+border:1px solid rgba(255,80,80,.35);
+color:#ff8080;
+}
+
+.back-btn{
+width:100%;
+margin-top:26px;
+padding:17px;
+border:none;
+border-radius:18px;
+background:#222;
+color:#fff;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+border:1px solid rgba(255,255,255,.12);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="title">
+        💵 Banco
+    </div>
+
+    <div class="subtitle">
+        Busca a un jugador y envíale monedas a su cuenta.
+    </div>
+
+    <div class="bank-card">
+
+        <div class="form-group">
+            <label for="playerSearch">
+                Correo, nombre o UID del jugador
+            </label>
+
+            <input
+                type="text"
+                id="playerSearch"
+                placeholder="Ejemplo: usuario@gmail.com"
+                autocomplete="off"
+            >
+        </div>
+
+        <button class="action-btn search-btn" id="searchPlayerBtn">
+            🔍 Buscar jugador
+        </button>
+
+        <div class="player-result" id="playerResult">
+
+            <div class="player-name" id="playerName">
+                Jugador
+            </div>
+
+            <div class="player-email" id="playerEmail"></div>
+
+            <div class="player-uid" id="playerUid"></div>
+
+            <div class="player-balance">
+                Saldo actual:
+                <strong id="playerCoins">0 monedas</strong>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="coinAmount">
+                Cantidad de monedas
+            </label>
+
+            <input
+                type="number"
+                id="coinAmount"
+                min="1"
+                step="1"
+                placeholder="Ejemplo: 100"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="coinReason">
+                Motivo del envío
+            </label>
+
+            <textarea
+                id="coinReason"
+                placeholder="Ejemplo: Premio, bono o ajuste administrativo"
+            ></textarea>
+        </div>
+
+        <button
+            class="action-btn send-btn"
+            id="sendCoinsBtn"
+            disabled
+        >
+            💰 Enviar monedas
+        </button>
+
+        <div class="status-message" id="statusMessage"></div>
+
+    </div>
+
+    <button
+        class="back-btn"
+        onclick="location.href='admin.html'"
+    >
+        ← Volver al Panel Admin
+    </button>
+
+</div>
+
+<script type="module">
+
+
+import { auth, db } from "./firebase-config.js";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const playerSearch = document.getElementById("playerSearch");
+const searchPlayerBtn = document.getElementById("searchPlayerBtn");
+const playerResult = document.getElementById("playerResult");
+const playerName = document.getElementById("playerName");
+const playerEmail = document.getElementById("playerEmail");
+const playerUid = document.getElementById("playerUid");
+const playerCoins = document.getElementById("playerCoins");
+const coinAmount = document.getElementById("coinAmount");
+const coinReason = document.getElementById("coinReason");
+const sendCoinsBtn = document.getElementById("sendCoinsBtn");
+const statusMessage = document.getElementById("statusMessage");
+
+let selectedPlayer = null;
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        location.href = "login.html";
+        return;
+    }
+});
+
+function showStatus(message, type) {
+    statusMessage.textContent = message;
+    statusMessage.className = `status-message show ${type}`;
+}
+
+function clearPlayerResult() {
+    selectedPlayer = null;
+    playerResult.classList.remove("show");
+    sendCoinsBtn.disabled = true;
+}
+
+function showPlayer(uid, data) {
+    selectedPlayer = {
+        uid,
+        ...data
+    };
+
+    playerName.textContent =
+        data.customName ||
+        data.name ||
+        "Jugador";
+
+    playerEmail.textContent =
+        `Correo: ${data.email || "No disponible"}`;
+
+    playerUid.textContent =
+        `UID: ${uid}`;
+
+    const coins = Number(data.coins) || 0;
+
+    playerCoins.textContent =
+        `${coins.toLocaleString("es-MX")} monedas`;
+
+    playerResult.classList.add("show");
+    sendCoinsBtn.disabled = false;
+
+    statusMessage.className = "status-message";
+    statusMessage.textContent = "";
+}
+
+searchPlayerBtn.addEventListener("click", async () => {
+
+    const searchValue = playerSearch.value.trim();
+
+    clearPlayerResult();
+
+    if (!searchValue) {
+        showStatus("Escribe el correo, nombre o UID del jugador.", "error");
+        return;
+    }
+
+    searchPlayerBtn.disabled = true;
+    searchPlayerBtn.textContent = "Buscando...";
+
+    try {
+
+        /*
+        Primero intenta buscar directamente por UID.
+        */
+        const directUserRef = doc(db, "users", searchValue);
+        const directUserSnap = await getDoc(directUserRef);
+
+        if (directUserSnap.exists()) {
+            showPlayer(directUserSnap.id, directUserSnap.data());
+            return;
+        }
+
+        /*
+        Si no era UID, busca por correo.
+        */
+        const usersRef = collection(db, "users");
+
+        const emailQuery = query(
+            usersRef,
+            where("email", "==", searchValue)
+        );
+
+        const emailSnapshot = await getDocs(emailQuery);
+
+        if (!emailSnapshot.empty) {
+            const result = emailSnapshot.docs[0];
+            showPlayer(result.id, result.data());
+            return;
+        }
+
+        /*
+        Si no encontró correo, busca por nombre exacto.
+        */
+        const nameQuery = query(
+            usersRef,
+            where("customName", "==", searchValue)
+        );
+
+        const nameSnapshot = await getDocs(nameQuery);
+
+        if (!nameSnapshot.empty) {
+            const result = nameSnapshot.docs[0];
+            showPlayer(result.id, result.data());
+            return;
+        }
+
+        showStatus("No se encontró ningún jugador.", "error");
+
+    } catch (error) {
+
+        console.error("Error al buscar jugador:", error);
+        showStatus("Ocurrió un error al buscar al jugador.", "error");
+
+    } finally {
+
+        searchPlayerBtn.disabled = false;
+        searchPlayerBtn.textContent = "🔍 Buscar jugador";
+
+    }
+
+});
+
+</script>
+
+
+</body>
+</html>
