@@ -103,5 +103,62 @@ cursor:pointer;
 
 </div>
 
+<script type="module">
+import { auth, db } from "./firebase-config.js";
+
+import {
+    collection,
+    query,
+    where,
+    orderBy,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const historyList = document.getElementById("historyList");
+
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+        location.href = "login.html";
+        return;
+    }
+
+const movementsRef = collection(db, "users", user.uid, "history");
+
+const q = query(movementsRef, orderBy("createdAt", "desc"));
+
+onSnapshot(q, (snapshot) => {
+
+    historyList.innerHTML = "";
+
+    if (snapshot.empty) {
+        historyList.innerHTML =
+"<div class='history-empty'>Todavía no tienes movimientos registrados.</div>";
+        return;
+    }
+
+    snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+
+        historyList.innerHTML += `
+            <div class="history-item">
+                <div>${data.description || "Movimiento"}</div>
+                <div>${data.amount > 0 ? "+" : ""}${data.amount} monedas</div>
+            </div>
+        `;
+    });
+
+});
+
+});
+
+</script>
+
+
 </body>
 </html>
