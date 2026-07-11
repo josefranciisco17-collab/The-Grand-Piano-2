@@ -344,6 +344,14 @@ return;
 
 userEmail.textContent = user.email;
 
+const userRef = doc(db, "users", user.uid);
+
+await setDoc(userRef, {
+    uid: user.uid,
+    email: user.email || "",
+    name: user.displayName || ""
+}, { merge: true });
+
 const userDoc = await getDoc(doc(db,"users",user.uid));
 
 if(userDoc.exists()){
