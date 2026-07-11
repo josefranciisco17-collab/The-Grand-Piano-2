@@ -291,14 +291,7 @@ onAuthStateChanged(auth, async (user) => {
 
         const userSnap = await getDoc(userRef);
 
-        Escucha el saldo en tiempo real.
-Cuando Firestore cambie las monedas,
-el contador se actualizará automáticamente.
-*//*
-        Si el usuario todavía no tiene documento,
-        se crea con saldo inicial de 0 monedas.
-        */
-  
+     
       if (!userSnap.exists()) {
 
             await setDoc(userRef, {
@@ -311,26 +304,18 @@ el contador se actualizará automáticamente.
 
         } else if (typeof userSnap.data().coins !== "number") {
 
-            /*
-            Si el usuario ya existe, pero todavía no tiene
-            el campo coins, se agrega sin borrar sus datos.
-            */
+
             await setDoc(userRef, {
                 coins: 0
             }, { merge: true });
 
         }
 
-        /*
-        Escucha el saldo en tiempo real.
-        Cuando Firestore cambie las monedas,
-        el contador se actualizará automáticamente.
-        */
-
-
+       
 
 onSnapshot(userRef, (snapshot) => {
 
+console.log("Documento leído:", snapshot.exists(), snapshot.data());
     if (!snapshot.exists()) {
         coinBalance.textContent = "0 Monedas";
         previousCoins = 0;
