@@ -177,34 +177,23 @@ adminCards.forEach((card) => {
   card.addEventListener("click", () => {
     const section = card.dataset.section;
 
-  renderHomeSection();
-  return;
-}
+    if (section === "home") {
+      renderHomeSection();
+      return;
+    }
 
-if (section === "settings") {
-  renderSettingsSection();
-  return;
-}
+    if (section === "announcements") {
+      renderAnnouncementsSection();
+      return;
+    }
 
-if (section === "home") {
-  renderHomeSection();
-  return;
-}
-
-
-if (section === "announcements") {
-  renderAnnouncementsSection();
-  return;
-}
-
- if (section === "settings") {
-    renderSettingsSection();
-    return;
+    if (section === "settings") {
+      renderSettingsSection();
+      return;
     }
 
     const sectionName =
       sectionNames[section] || "Sección";
-
 
     contentSection.innerHTML = `
       <div class="empty-state">
@@ -222,7 +211,6 @@ if (section === "announcements") {
     scrollToContent();
   });
 });
-
 
 /* DASHBOARD DE INICIO */
 
