@@ -177,14 +177,29 @@ adminCards.forEach((card) => {
   card.addEventListener("click", () => {
     const section = card.dataset.section;
 
+  renderHomeSection();
+  return;
+}
+
+if (section === "settings") {
+  renderSettingsSection();
+  return;
+}
+
 if (section === "home") {
   renderHomeSection();
   return;
 }
 
-    if (section === "settings") {
-      renderSettingsSection();
-      return;
+
+if (section === "announcements") {
+  renderAnnouncementsSection();
+  return;
+}
+
+ if (section === "settings") {
+    renderSettingsSection();
+    return;
     }
 
     const sectionName =
@@ -402,6 +417,96 @@ function renderHomeSection() {
   scrollToContent();
 }
 
+
+function renderAnnouncementsSection() {
+  contentSection.innerHTML = `
+    <div class="section-header">
+      <p class="section-label">Comunicación</p>
+      <h2>📢 Anuncios</h2>
+      <p>
+        Publica novedades y avisos para los jugadores.
+      </p>
+    </div>
+
+    <form id="announcementForm" class="settings-form">
+
+      <label for="announcementTitle">
+        Título del anuncio
+      </label>
+
+      <input
+        id="announcementTitle"
+        type="text"
+        placeholder="Ejemplo: Nueva actualización"
+        maxlength="80"
+        required
+      >
+
+      <label for="announcementMessage">
+        Mensaje
+      </label>
+
+      <textarea
+        id="announcementMessage"
+        placeholder="Escribe aquí el anuncio para los jugadores"
+        maxlength="500"
+        rows="7"
+        required
+      ></textarea>
+
+      <button
+        class="primary-button"
+        type="submit"
+      >
+        📢 Publicar anuncio
+      </button>
+
+      <p
+        id="announcementStatus"
+        class="form-message"
+      ></p>
+
+    </form>
+  `;
+
+  const announcementForm =
+    document.getElementById("announcementForm");
+
+  const announcementStatus =
+    document.getElementById("announcementStatus");
+
+  announcementForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const title =
+      document.getElementById("announcementTitle")
+        .value
+        .trim();
+
+    const message =
+      document.getElementById("announcementMessage")
+        .value
+        .trim();
+
+    if (!title || !message) {
+      announcementStatus.textContent =
+        "Completa el título y el mensaje.";
+
+      announcementStatus.className =
+        "form-message error";
+
+      return;
+    }
+
+    announcementStatus.textContent =
+      "El formulario ya funciona. En el siguiente paso lo conectaremos con Firestore.";
+
+    announcementStatus.className =
+      "form-message success";
+  });
+
+  scrollToContent();
+}
 
 
 /* CONFIGURACIÓN Y SEGURIDAD */
