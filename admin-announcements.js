@@ -34,7 +34,9 @@ async function prepareAnnouncementsSection() {
 
   contentSection.innerHTML = `
     <div class="section-header">
-      <p class="section-label">Comunicación</p>
+        id="globalAnnouncementStatus"
+  class="form-message"
+></p><p class="section-label">Comunicación</p>
       <h2>📢 Anuncios</h2>
       <p>
         Envía un mensaje general o un aviso privado.
@@ -76,11 +78,12 @@ async function prepareAnnouncementsSection() {
       </button>
 
       <p
-        id="globalAnnouncementStatus"
-        class="form-message"
+      id="globalAnnouncementStatus"
+      class="form-message"
+      hidden
       ></p>
 
-      <hr>
+      
 
       <h3>🔒 Anuncio privado</h3>
 
@@ -124,10 +127,11 @@ async function prepareAnnouncementsSection() {
         🔒 Enviar anuncio privado
       </button>
 
-      <p
-        id="privateAnnouncementStatus"
-        class="form-message"
-      ></p>
+       <p
+       id="privateAnnouncementStatus"
+       class="form-message"
+       hidden
+       ></p>
 
     </section>
   `;
@@ -379,7 +383,7 @@ function showStatus(element, message, type) {
   if (!element) {
     return;
   }
-
+  element.hidden = false;
   element.textContent = message;
   element.className =
     `form-message ${type}`;
