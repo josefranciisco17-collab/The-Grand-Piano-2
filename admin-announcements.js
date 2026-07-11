@@ -34,9 +34,7 @@ async function prepareAnnouncementsSection() {
 
   contentSection.innerHTML = `
     <div class="section-header">
-        id="globalAnnouncementStatus"
-  class="form-message"
-></p><p class="section-label">Comunicación</p>
+<p class="section-label">Comunicación</p>
       <h2>📢 Anuncios</h2>
       <p>
         Envía un mensaje general o un aviso privado.
@@ -83,7 +81,7 @@ async function prepareAnnouncementsSection() {
       hidden
       ></p>
 
-      
+
 
       <h3>🔒 Anuncio privado</h3>
 
