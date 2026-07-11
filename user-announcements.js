@@ -12,6 +12,9 @@ import {
 let unsubscribeGlobal = null;
 let unsubscribePrivate = null;
 
+
+}
+
 function createAnnouncementWindow() {
   if (document.getElementById("announcementOverlay")) {
     return;
@@ -32,23 +35,20 @@ function createAnnouncementWindow() {
 
   document.body.appendChild(overlay);
 
-    document.getElementById("closeAnnouncementBtn");const closeButton =
+  const closeButton =
     document.getElementById("closeAnnouncementBtn");
 
+  closeButton.addEventListener("click", () => {
+    const storageKey = overlay.dataset.storageKey;
+
+    if (storageKey) {
+      localStorage.setItem(storageKey, "true");
+    }
+
     overlay.style.display = "none";
-});
-
-closeButton.addEventListener("click", () => {
-  const storageKey = overlay.dataset.storageKey;
-
-  if (storageKey) {
-    localStorage.setItem(storageKey, "true");
-  }
-
-  overlay.style.display = "none";
-});
-
+  });
 }
+
 
 
 function showAnnouncement(title, message, announcementId) {
