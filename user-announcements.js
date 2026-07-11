@@ -13,7 +13,6 @@ let unsubscribeGlobal = null;
 let unsubscribePrivate = null;
 
 
-}
 
 function createAnnouncementWindow() {
   if (document.getElementById("announcementOverlay")) {
