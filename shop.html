@@ -176,7 +176,6 @@ text-shadow:0 0 15px rgba(212,175,55,.25);
         Compra monedas de forma rápida y segura.
     </div>
 
-</div> 
 
 </button>
 
@@ -206,6 +205,102 @@ text-shadow:0 0 15px rgba(212,175,55,.25);
     </button>
 
 </div>
+
+<script type="module">
+import { auth, db } from "./firebase-config.js";
+
+import {
+    doc,
+    getDoc,
+    setDoc,
+    onSnapshot,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+const coinBalance = document.getElementById("coinBalance");
+
+coinBalance.textContent = "Cargando...";
+
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+        location.href = "login.html";
+        return;
+    }
+
+    const userRef = doc(db, "users", user.uid);
+
+    try {
+
+        const userSnap = await getDoc(userRef);
+
+        /*
+        Si el usuario todavía no tiene documento,
+        se crea con saldo inicial de 0 monedas.
+        */
+        if (!userSnap.exists()) {
+
+            await setDoc(userRef, {
+                uid: user.uid,
+                email: user.email || "",
+                name: user.displayName || "",
+                coins: 0,
+                createdAt: serverTimestamp()
+            }, { merge: true });
+
+        } else if (typeof userSnap.data().coins !== "number") {
+
+            /*
+            Si el usuario ya existe, pero todavía no tiene
+            el campo coins, se agrega sin borrar sus datos.
+            */
+            await setDoc(userRef, {
+                coins: 0
+            }, { merge: true });
+
+        }
+
+        /*
+        Escucha el saldo en tiempo real.
+        Cuando Firestore cambie las monedas,
+        el contador se actualizará automáticamente.
+        */
+        onSnapshot(userRef, (snapshot) => {
+
+            if (!snapshot.exists()) {
+                coinBalance.textContent = "0 Monedas";
+                return;
+            }
+
+            const data = snapshot.data();
+            const coins = Number(data.coins) || 0;
+
+            coinBalance.textContent =
+                `${coins.toLocaleString("es-MX")} ${coins === 1 ? "Moneda" : "Monedas"}`;
+
+        }, (error) => {
+
+            console.error("Error al escuchar el saldo:", error);
+            coinBalance.textContent = "Error al cargar";
+
+        });
+
+    } catch (error) {
+
+        console.error("Error al preparar el saldo:", error);
+        coinBalance.textContent = "Error al cargar";
+
+    }
+
+});
+</script>
+
 
 </body>
 </html>
