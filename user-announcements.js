@@ -32,16 +32,37 @@ function createAnnouncementWindow() {
 
   document.body.appendChild(overlay);
 
-  const closeButton =
+    document.getElementById("closeAnnouncementBtn");const closeButton =
     document.getElementById("closeAnnouncementBtn");
 
-  closeButton.addEventListener("click", () => {
     overlay.style.display = "none";
-  });
+});
+
+closeButton.addEventListener("click", () => {
+  const storageKey = overlay.dataset.storageKey;
+
+  if (storageKey) {
+    localStorage.setItem(storageKey, "true");
+  }
+
+  overlay.style.display = "none";
+});
+
 }
 
-function showAnnouncement(title, message) {
+function   data.title,
+  data.message
+);
+
+showAnnouncement(title, message, announcementId) {
   createAnnouncementWindow();
+
+
+const storageKey = `seenAnnouncement_${announcementId}`;
+
+if (localStorage.getItem(storageKey)) {
+  return;
+}
 
   const overlay =
     document.getElementById("announcementOverlay");
@@ -57,7 +78,7 @@ function showAnnouncement(title, message) {
 
   messageElement.textContent =
     message || "";
-
+overlay.dataset.storageKey = storageKey;
   overlay.style.display = "flex";
 }
 
@@ -93,10 +114,11 @@ onAuthStateChanged(auth, (user) => {
         return;
       }
 
-      showAnnouncement(
-        data.title,
-        data.message
-      );
+showAnnouncement(
+    data.title,
+    data.message,
+    `global_${data.createdAt?.seconds || Date.now()}`
+);
     }
   );
 
@@ -122,10 +144,11 @@ onAuthStateChanged(auth, (user) => {
         return;
       }
 
-      showAnnouncement(
-        data.title,
-        data.message
-      );
+showAnnouncement(
+  data.title,
+  data.message,
+  `private_${user.uid}_${data.createdAt?.seconds || Date.now()}`
+);
     }
   );
 
