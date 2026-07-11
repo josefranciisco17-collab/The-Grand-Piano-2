@@ -298,8 +298,16 @@ border:1px solid rgba(255,255,255,.12);
 
 <script type="module">
 
-
-import { auth, db } from "./firebase-config.js";
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    getDoc,
+    runTransaction,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
     collection,
@@ -447,6 +455,90 @@ searchPlayerBtn.addEventListener("click", async () => {
 
         searchPlayerBtn.disabled = false;
         searchPlayerBtn.textContent = "🔍 Buscar jugador";
+
+    }
+
+});
+
+
+sendCoinsBtn.addEventListener("click", async () => {
+
+    if (!selectedPlayer) {
+        showStatus("Primero busca y selecciona un jugador.", "error");
+        return;
+    }
+
+    const amount = Number(coinAmount.value);
+    const reason = coinReason.value.trim();
+
+    if (!Number.isInteger(amount) || amount <= 0) {
+        showStatus("Escribe una cantidad válida de monedas.", "error");
+        return;
+    }
+
+    if (!reason) {
+        showStatus("Escribe el motivo del envío.", "error");
+        return;
+    }
+
+    sendCoinsBtn.disabled = true;
+    sendCoinsBtn.textContent = "Enviando...";
+
+    try {
+
+        const userRef = doc(db, "users", selectedPlayer.uid);
+        const historyRef = doc(
+            collection(db, "users", selectedPlayer.uid, "history")
+        );
+
+        let newBalance = 0;
+
+        await runTransaction(db, async (transaction) => {
+
+            const userSnap = await transaction.get(userRef);
+
+            if (!userSnap.exists()) {
+                throw new Error("El jugador ya no existe.");
+            }
+
+            const currentCoins = Number(userSnap.data().coins) || 0;
+            newBalance = currentCoins + amount;
+
+            transaction.update(userRef, {
+                coins: newBalance
+            });
+
+            transaction.set(historyRef, {
+                amount: amount,
+                description: reason,
+                type: "admin_credit",
+                createdAt: serverTimestamp()
+            });
+
+        });
+
+        selectedPlayer.coins = newBalance;
+
+        playerCoins.textContent =
+            `${newBalance.toLocaleString("es-MX")} monedas`;
+
+        coinAmount.value = "";
+        coinReason.value = "";
+
+        showStatus(
+            `${amount.toLocaleString("es-MX")} monedas enviadas correctamente.`,
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error("Error al enviar monedas:", error);
+        showStatus("No fue posible enviar las monedas.", "error");
+
+    } finally {
+
+        sendCoinsBtn.disabled = false;
+        sendCoinsBtn.textContent = "💰 Enviar monedas";
 
     }
 
