@@ -298,6 +298,8 @@ border:1px solid rgba(255,255,255,.12);
 
 <script type="module">
 
+import { auth, db } from "./firebase-config.js";
+
 import {
     collection,
     query,
@@ -307,15 +309,6 @@ import {
     getDoc,
     runTransaction,
     serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    doc,
-    getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
