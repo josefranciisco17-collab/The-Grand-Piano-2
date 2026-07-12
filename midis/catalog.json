@@ -18,5 +18,15 @@
     "active": true,
     "updatedAt": "2026-07-10T23:55:07.830Z",
     "uploadedAt": "2026-07-10T23:55:07.830Z"
+  },
+  "How-to-train-your-dragon.mid": {
+    "songName": "How to Train your Dragon",
+    "artist": "Dreamworks Song",
+    "difficulty": "Media",
+    "category": "Videojuegos",
+    "price": 200,
+    "active": true,
+    "updatedAt": "2026-07-12T00:24:40.698Z",
+    "uploadedAt": "2026-07-12T00:24:40.698Z"
   }
 }
